@@ -97,6 +97,7 @@ def main(argv):
         .replace( \
             '<meta content="text/html; charset=UTF-8" http-equiv="content-type">', \
             '<meta content="text/html; charset=UTF-8" http-equiv="content-type"/>') \
+        .replace('<hr style="page-break-before:always;display:none;">', '') \
         .replace("<br>",  "\n") \
         .replace("&nbsp;",  " ") \
         .replace("&Ooml;",  '\\"O ') \
