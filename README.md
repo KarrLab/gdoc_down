@@ -19,9 +19,10 @@ Command line program to save Google documents to LaTeX files. The program has on
 
 The program will save the file with the same name and path as the Google document but with the `.tex` extension.
 
-The program has two special features for handling LaTeX files:
+The program has several special features for handling LaTeX files:
 * The program will ignore all images. This allows the user to place images inside the Google document for convenience and to use `includegraphics` to embed images in compile PDF files.
 * The program will convert all Google document comments to PDF comments.
+* The program ignores all page breaks.
 
 For example:
 `gdoc2tex.py MyDoc.gdoc` will place the content of `MyDoc` in `MyDoc.tex`.
