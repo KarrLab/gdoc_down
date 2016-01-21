@@ -104,7 +104,9 @@ def main(argv):
         .replace("&ooml;",  '\\"o ') \
         .replace("&Uuml;",  '\\"U ') \
         .replace("&ouml;",  '\\"u ') \
-        .replace("&mdash;",  '---') \
+        .replace("&ndash;", '--') \
+        .replace("&mdash;", '---') \
+        .replace("&lsquo;", "`") \
         .replace("&rsquo;", "'") \
         .replace("&sim;", "~")
     
