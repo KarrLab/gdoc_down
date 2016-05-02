@@ -123,16 +123,27 @@ def main(argv):
     comment_id = 0
     while True:
         comment_id = comment_id + 1
-        comment = root.find((".//a[@name='cmnt%d']/../span" % comment_id))
+        comment = root.find((".//a[@id='cmnt%d']" % comment_id))
+        comment_parent = root.find((".//a[@id='cmnt%d']/.." % comment_id))
+        comment_grandparent = root.find((".//a[@id='cmnt%d']/../.." % comment_id))
+        comment_greatgrandparent = root.find((".//a[@id='cmnt%d']/../../.." % comment_id))
         if comment is None:
             break
-        root.find((".//a[@name='cmnt_ref%d']" % comment_id)).text = ('\pdfcomment{%s}' % comment.text)
-        comment_parent = root.find((".//a[@name='cmnt%d']/../.." % comment_id))
-        comment_grandparent = root.find((".//a[@name='cmnt%d']/../../.." % comment_id))
-        comment_grandparent.remove(comment_parent)
+        
+        #remove numbering from comment
+        comment_parent.remove(comment)
+        
+        #replace superscript with PDF comment
+        ref = root.find((".//a[@id='cmnt_ref%d']" % comment_id))
+        ref_parent = root.find((".//a[@id='cmnt_ref%d']/.." % comment_id))
+        ref_parent.remove(ref)
+        ref_parent.text = ('\pdfcomment{%s}' % getTextRecursively(comment_grandparent))
+        
+        #remove comment footnote
+        comment_greatgrandparent.remove(comment_grandparent)
         
     #remove head
-    root.remove(root.find("./head"))    
+    root.remove(root.find("./head"))
         
     #
     text = ''
