@@ -33,7 +33,7 @@ import sys
    
 CLIENT_SECRET_PATH = path.join(path.dirname(path.realpath(__file__)), 'client.json')
 CREDENTIAL_PATH = path.join(path.dirname(path.realpath(__file__)), 'auth.json')
-APPLICATION_NAME = 'gdoc2tex'
+APPLICATION_NAME = 'gdoc2docx'
 SCOPES = (
     'https://www.googleapis.com/auth/drive',
     'https://www.googleapis.com/auth/drive.file',

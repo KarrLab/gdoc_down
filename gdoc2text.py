@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 '''
-gdoc2tex
+gdoc2text
 
 Command line program to save the content of a Google document to a text file. The program
 has two arguments:

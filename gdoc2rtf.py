@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 '''
-gdoc2pdf
+gdoc2rtf
 
-Command line program to save the content of a Google document to a PDF file. The program
+Command line program to save the content of a Google document to a RTF file. The program
 has one argument:
 - Google document file name
 
@@ -33,7 +33,7 @@ import sys
    
 CLIENT_SECRET_PATH = path.join(path.dirname(path.realpath(__file__)), 'client.json')
 CREDENTIAL_PATH = path.join(path.dirname(path.realpath(__file__)), 'auth.json')
-APPLICATION_NAME = 'gdoc2pdf'
+APPLICATION_NAME = 'gdoc2rtf'
 SCOPES = (
     'https://www.googleapis.com/auth/drive',
     'https://www.googleapis.com/auth/drive.file',
@@ -82,10 +82,10 @@ def main(argv):
     
     #download file
     file = service.files().get(fileId=gdoc_id).execute()
-    resp, content = service._http.request(file['exportLinks']['application/pdf'])
+    resp, content = service._http.request(file['exportLinks']['application/rtf'])
      
     if resp.status == 200:
-        local_fd = open(ifile.replace('.gdoc', '.pdf'), "wb")
+        local_fd = open(ifile.replace('.gdoc', '.docx'), "wb")
         local_fd.write(content)
         local_fd.close()
         print('File saved')
