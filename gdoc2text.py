@@ -69,19 +69,21 @@ def get_credentials():
     return credentials
 
 def main(argv):
+    odir = '.'
     try:
-        opts, args = getopt.getopt(argv, "hi:e:", ["ifile=","ext="])
+        opts, args = getopt.getopt(argv, "he:o:", ["ext=", "odir"])
     except getopt.GetoptError:
-        print('gdoc2text.py -i <ifile> -e <ext>')
+        print('gdoc2text.py -e <ext> -o <odir> <ifile>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('gdoc2text.py -i <ifile> -e <ext>')
+            print('gdoc2text.py -e <ext> -o <odir> <ifile>')
             sys.exit()
-        elif opt in ("-i", "--ifile"):
-            ifile = arg
         elif opt in ("-e", "--ext"):
             ext = arg
+        elif opt in ("-o", "--odir"):
+            odir = arg
+    ifile = args[0]
 
     #authenticate
     credentials = get_credentials()
@@ -98,7 +100,7 @@ def main(argv):
     resp, content = service._http.request(file['exportLinks']['text/plain'])
     content = content[3:]
     if resp.status == 200:
-        local_fd = open(ifile.replace('.gdoc', '.' + ext), "w")
+        local_fd = open(os.path.join(odir, ifile.replace('.gdoc', '.' + ext)), "w")
         local_fd.write(content)
         local_fd.close()
         print('File saved')

@@ -21,6 +21,7 @@ Last updated: 2015-11-03
 '''
 
 from apiclient import discovery
+import getopt
 import httplib2
 import json
 import re
@@ -33,7 +34,7 @@ import sys
    
 CLIENT_SECRET_PATH = path.join(path.dirname(path.realpath(__file__)), 'client.json')
 CREDENTIAL_PATH = path.join(path.dirname(path.realpath(__file__)), 'auth.json')
-APPLICATION_NAME = 'gdoc2tex'
+APPLICATION_NAME = 'gdoc2pdf'
 SCOPES = (
     'https://www.googleapis.com/auth/drive',
     'https://www.googleapis.com/auth/drive.file',
@@ -68,6 +69,18 @@ def get_credentials():
     return credentials
 
 def main(argv):    
+    odir = '.'
+    try:
+        opts, args = getopt.getopt(argv, "ho:", ["odir="])
+    except getopt.GetoptError:
+        print('gdoc2pdf.py -o <odir> ifile')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print('gdoc2pdf.py -o <odir> ifile')
+            sys.exit()
+        elif opt in ("-o", "--odir"):
+            odir = arg
     ifile = argv[0]
     
     #authenticate
@@ -85,7 +98,7 @@ def main(argv):
     resp, content = service._http.request(file['exportLinks']['application/pdf'])
      
     if resp.status == 200:
-        local_fd = open(ifile.replace('.gdoc', '.pdf'), "wb")
+        local_fd = open(os.path.join(odir, ifile.replace('.gdoc', '.pdf')), "wb")
         local_fd.write(content)
         local_fd.close()
         print('File saved')

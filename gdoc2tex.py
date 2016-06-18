@@ -21,6 +21,7 @@ Last updated: 2015-11-03
 '''
 
 from apiclient import discovery
+import getopt
 import httplib2
 import json
 import re
@@ -73,8 +74,21 @@ def get_credentials():
             credentials = tools.run(flow, store)
     return credentials
 
-def main(argv):    
-    ifile = argv[0]
+def main(argv): 
+    odir = '.'
+    try:
+        opts, args = getopt.getopt(argv, "ho:", ["odir="])
+    except getopt.GetoptError:
+        print('gdoc2tex.py -o <odir> ifile')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print('gdoc2tex.py -o <odir> ifile')
+            sys.exit()
+        elif opt in ("-o", "--odir"):
+            odir = arg
+
+    ifile = args[0]
     
     #authenticate
     credentials = get_credentials()
@@ -154,7 +168,7 @@ def main(argv):
     content = ET.tostring(root)
     
     if resp.status == 200:
-        local_fd = open(ifile.replace('.gdoc', '.tex'), "w")
+        local_fd = open(os.path.join(odir, ifile.replace('.gdoc', '.tex')), "w")
         local_fd.write(text)
         local_fd.close()
         print('File saved')
