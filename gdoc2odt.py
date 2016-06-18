@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
 '''
-gdoc2text
+gdoc2odt
 
-Command line program to save the content of a Google document to a text file. The program
-has two arguments:
-- -i, --ifile: Google document file name
-- -e, --ext: Output file extension
+Command line program to save the content of a Google document to an ODT file. The program
+has one argument:
+- Google document file name
 
 The first time the program is called, the program will request access to the user's Google
 account.
@@ -22,9 +21,9 @@ Last updated: 2015-11-03
 '''
 
 from apiclient import discovery
-import getopt
 import httplib2
 import json
+import re
 import oauth2client
 from oauth2client import client
 from oauth2client import tools
@@ -34,7 +33,7 @@ import sys
    
 CLIENT_SECRET_PATH = path.join(path.dirname(path.realpath(__file__)), 'client.json')
 CREDENTIAL_PATH = path.join(path.dirname(path.realpath(__file__)), 'auth.json')
-APPLICATION_NAME = 'gdoc2text'
+APPLICATION_NAME = 'gdoc2odt'
 SCOPES = (
     'https://www.googleapis.com/auth/drive',
     'https://www.googleapis.com/auth/drive.file',
@@ -68,23 +67,9 @@ def get_credentials():
             credentials = tools.run(flow, store)
     return credentials
 
-def main(argv):
-    odir = '.'
-    try:
-        opts, args = getopt.getopt(argv, "he:o:", ["ext=", "odir"])
-    except getopt.GetoptError:
-        print('gdoc2text.py -e <ext> -o <odir> <ifile>')
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print('gdoc2text.py -e <ext> -o <odir> <ifile>')
-            sys.exit()
-        elif opt in ("-e", "--ext"):
-            ext = arg
-        elif opt in ("-o", "--odir"):
-            odir = arg
-    ifile = args[0]
-
+def main(argv):    
+    ifile = argv[0]
+    
     #authenticate
     credentials = get_credentials()
     http_auth = credentials.authorize(httplib2.Http())
@@ -97,10 +82,10 @@ def main(argv):
     
     #download file
     file = service.files().get(fileId=gdoc_id).execute()
-    resp, content = service._http.request(file['exportLinks']['text/plain'])
-    content = content[3:]
+    resp, content = service._http.request(file['exportLinks']['application/vnd.oasis.opendocument.text'])
+     
     if resp.status == 200:
-        local_fd = open(os.path.join(odir, ifile.replace('.gdoc', '.' + ext)), "w")
+        local_fd = open(ifile.replace('.gdoc', '.docx'), "wb")
         local_fd.write(content)
         local_fd.close()
         print('File saved')
