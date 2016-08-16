@@ -1,0 +1,6 @@
+google-api-python-client
+httplib2
+oauth2client
+PyOpenSSL
+Sphinx
+sphinx_rtd_theme

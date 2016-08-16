@@ -1,1 +1,22 @@
+# compiled files
+*.pyc
+
+# cache
+__pycache__
+
+#distribution files
+build/
+dist/
+*.egg-info
+
+# coverage file
+.coverage*
+
+# .rst-formatted README
+README.rst
+
+# compiled documentation
+docs/_build
+
+# credentials
 client.json

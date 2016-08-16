@@ -10,12 +10,6 @@ has one argument:
 The first time the program is called, the program will request access to the user's Google
 account.
 
-The program requires the google-api-python-client, oauth2client, PyOpenSSL packages. These
-can be installed using pip:
->> pip install --upgrade google-api-python-client
->> pip install --upgrade oauth2client
->> pip install PyOpenSSL
-
 Author: Jonathan Karr, karr@mssm.edu
 Last updated: 2015-11-03
 '''
@@ -32,8 +26,8 @@ import os
 from os import path
 import sys
    
-CLIENT_SECRET_PATH = path.join(path.dirname(path.realpath(__file__)), 'client.json')
-CREDENTIAL_PATH = path.join(path.dirname(path.realpath(__file__)), 'auth.json')
+CLIENT_SECRET_PATH = path.join(path.dirname(path.realpath(__file__)), '../client.json')
+CREDENTIAL_PATH = path.join(path.dirname(path.realpath(__file__)), '../auth.json')
 APPLICATION_NAME = 'gdoc2tex'
 SCOPES = (
     'https://www.googleapis.com/auth/drive',
@@ -41,7 +35,7 @@ SCOPES = (
     'https://www.googleapis.com/auth/drive.metadata.readonly',
     'https://www.googleapis.com/auth/drive.readonly',
     )
-    
+
 def getTextRecursively(el):
     text = el.text or ''
     for child in list(el):
