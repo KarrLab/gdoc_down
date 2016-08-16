@@ -1,0 +1,21 @@
+machine:
+  python:
+    version: 2.7.11
+  post:
+    - pyenv global 2.7.11 3.5.1
+dependencies:
+  pre:
+    - pip2 install git+git://github.com/jonrkarr/junit2html.git
+    - pip3 install git+git://github.com/jonrkarr/junit2html.git
+    - pip2 install -e .
+    - pip3 install -e .
+    - pip2 install Karr-Lab-build-utils
+    - pip3 install Karr-Lab-build-utils
+    - karr-lab-build-utils-2 install-requirements
+    - karr-lab-build-utils-3 install-requirements
+test:
+  override:
+    - karr-lab-build-utils-2 run-tests tests --with-xunit --with-coverage
+    - karr-lab-build-utils-3 run-tests tests --with-xunit --with-coverage
+  post:
+    - karr-lab-build-utils make-and-archive-reports
