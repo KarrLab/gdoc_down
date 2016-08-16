@@ -1,7 +1,9 @@
-# `gdoc2text`
-Command line programs to save Google documents to text and LaTeX files.
-* `gdoc2text`: saves Google documents to text files
-* `gdoc2tex`: saves Google documents to LaTeX files
+[![PyPI package](https://img.shields.io/pypi/v/gdoc-down.svg)](https://pypi.python.org/pypi/gdoc-down)
+[![Documentation](https://readthedocs.org/projects/gdoc-down/badge/?version=latest)](http://gdoc-down.readthedocs.org)
+[![Test results](https://circleci.com/gh/KarrLab/gdoc-down.svg?style=shield)](https://circleci.com/gh/KarrLab/gdoc-down)
+[![Test coverage](https://coveralls.io/repos/github/KarrLab/gdoc-down/badge.svg)](https://coveralls.io/github/KarrLab/gdoc-down)
+[![Code analysis](https://codeclimate.com/github/KarrLab/gdoc-down/badges/gpa.svg)](https://codeclimate.com/github/KarrLab/gdoc-down)
+[![License](https://img.shields.io/github/license/KarrLab/gdoc-down.svg)](LICENSE)
 
 ## `gdoc2text`
 Command line program to save Google documents to text files. The program has two arguments:
