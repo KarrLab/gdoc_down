@@ -29,7 +29,7 @@ class BaseController(CementBaseController):
     def default(self):
         args = self.app.pargs
 
-        GDocDown().download(args.gdoc_file, format=args.format, out_path=args.out_path, extension=args.extension)
+        GDocDown(credentials=self.app.credentials).download(args.gdoc_file, format=args.format, out_path=args.out_path, extension=args.extension)
 
 
 class App(CementApp):
@@ -39,6 +39,10 @@ class App(CementApp):
         label = 'gdoc-down'
         base_controller = 'base'
         handlers = [BaseController]
+
+    def __init__(self, credentials=None, **kwargs):
+        super(App, self).__init__(**kwargs)
+        self.credentials = credentials
 
 
 def main():

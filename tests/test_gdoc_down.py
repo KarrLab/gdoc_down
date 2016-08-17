@@ -10,6 +10,7 @@ from docx import Document as DocxDocument
 from PyPDF2 import PdfFileReader
 from gdoc_down.__main__ import App as cli
 from gdoc_down.core import GDocDown
+from oauth2client.client import GoogleCredentials
 from odf import opendocument
 from odf import text as odf_text
 from xml.etree import ElementTree
@@ -31,6 +32,10 @@ class TestGdocDown(unittest.TestCase):
     def setUp(self):
         # create temporary directory for downloaded files
         self.out_dir = tempfile.mkdtemp()
+        if os.getenv('CIRCLECI'):
+            self.credentials = GoogleCredentials.get_application_default()
+        else:
+            self.credentials = None
 
     def tearDown(self):
         # cleanup temporary directory
@@ -40,7 +45,8 @@ class TestGdocDown(unittest.TestCase):
         self.assertEqual(GDocDown.get_gdoc_id(self.FIXTURE_FILE), '1mgPojZVReTAMBIVvt6LSQ59AGTsxx2-myLR9oIYIJ2s')
 
     def test_api_txt(self):
-        GDocDown().download(self.FIXTURE_FILE, format='txt', out_path=os.path.join(self.out_dir, 'example-out.text'))
+        GDocDown(credentials=self.credentials).download(self.FIXTURE_FILE,
+                                                        format='txt', out_path=os.path.join(self.out_dir, 'example-out.text'))
 
         # check that file downloaded
         self.assertTrue(os.path.isfile(os.path.join(self.out_dir, 'example-out.text')))
@@ -50,7 +56,7 @@ class TestGdocDown(unittest.TestCase):
             self.assertEqual(file.read().strip(), 'gdoc-down example file')
 
     def test_cli_2docx(self):
-        with cli(argv=['-f', 'docx', '-o', self.out_dir, self.FIXTURE_FILE]) as app:
+        with cli(argv=['-f', 'docx', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
             app.run()
 
         # check that file downloaded
@@ -61,7 +67,7 @@ class TestGdocDown(unittest.TestCase):
         self.assertRegexpMatches(doc.paragraphs[0].text, 'gdoc-down example file')
 
     def test_cli_2html(self):
-        with cli(argv=['-f', 'html', '-o', self.out_dir, self.FIXTURE_FILE]) as app:
+        with cli(argv=['-f', 'html', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
             app.run()
 
         # check that file downloaded
@@ -72,7 +78,7 @@ class TestGdocDown(unittest.TestCase):
             self.assertRegexpMatches(file.read(), 'gdoc-down example file')
 
     def test_cli_2odt(self):
-        with cli(argv=['-f', 'odt', '-o', self.out_dir, self.FIXTURE_FILE]) as app:
+        with cli(argv=['-f', 'odt', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
             app.run()
 
         # check that file downloaded
@@ -84,7 +90,7 @@ class TestGdocDown(unittest.TestCase):
         self.assertRegexpMatches(GDocDown.get_element_text(root), 'gdoc-down example file'.replace(' ', ''))
 
     def test_cli_2pdf(self):
-        with cli(argv=['-f', 'pdf', '-o', self.out_dir, self.FIXTURE_FILE]) as app:
+        with cli(argv=['-f', 'pdf', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
             app.run()
 
         # check that file downloaded
@@ -95,7 +101,7 @@ class TestGdocDown(unittest.TestCase):
             PdfFileReader(file)
 
     def test_cli_2rtf(self):
-        with cli(argv=['-f', 'rtf', '-o', self.out_dir, self.FIXTURE_FILE]) as app:
+        with cli(argv=['-f', 'rtf', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
             app.run()
 
         # check that file downloaded
@@ -112,7 +118,7 @@ class TestGdocDown(unittest.TestCase):
             self.assertRegexpMatches(GDocDown.get_element_text(root.getroot()), 'gdoc-down example file')
 
     def test_cli_2tex(self):
-        with cli(argv=['-f', 'tex', '-o', self.out_dir, self.FIXTURE_FILE]) as app:
+        with cli(argv=['-f', 'tex', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
             app.run()
 
         # check that file downloaded
@@ -123,7 +129,7 @@ class TestGdocDown(unittest.TestCase):
             self.assertEqual(file.read().strip(), 'gdoc-down example file')
 
     def test_cli_2txt(self):
-        with cli(argv=['-f', 'txt', '-o', self.out_dir, self.FIXTURE_FILE]) as app:
+        with cli(argv=['-f', 'txt', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
             app.run()
 
         # check that file downloaded

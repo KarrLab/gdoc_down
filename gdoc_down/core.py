@@ -7,9 +7,10 @@ Save the content of a Google document to a local file.
 :License: MIT
 """
 
+from oauth2client import tools as oauth2client_tools
 from xml.etree import ElementTree
 import apiclient
-import httplib2
+import argparse
 import json
 import re
 import oauth2client
@@ -18,7 +19,7 @@ import os
 
 class GDocDown(object):
     """ Downloads Google documents to several formats
-    
+
     - HTML (.html)
     - LaTeX (.tex)
     - Open Office document (.odt)
@@ -55,26 +56,49 @@ class GDocDown(object):
         'https://www.googleapis.com/auth/drive.readonly',
     )
 
-    def __init__(self):
-        self.get_credentials()
-        self.authenticate()
+    def __init__(self, credentials=None, service=None):
+        """
+        Arguments:
+            credentials (:obj:`oauth2client.client.OAuth2Credentials`, optional): Credentials object for OAuth 2.0.
+            service (:obj:`apiclient.discovery.Resource`, optional): A Resource object with methods for interacting with the service
+        """
+        if credentials is None:
+            credentials = self.get_credentials()
+
+        if service is None:
+            service = self.authenticate(credentials)
+
+        self.credentials = credentials
+        self.service = service
 
     def get_credentials(self):
         """ Get and save user credentials from Google. If credentials haven't already been 
-        stored, or if the stored credentials are invalid, obtain the new credentials. """
+        stored, or if the stored credentials are invalid, obtain the new credentials. 
+        
+        Retuns:
+            :obj:`oauth2client.client.OAuth2Credentials`: Credentials object for OAuth 2.0.
+        """
         store = oauth2client.file.Storage(GDocDown.CREDENTIAL_PATH)
         credentials = store.get()
         if not credentials or credentials.invalid:
             flow = oauth2client.client.flow_from_clientsecrets(GDocDown.CLIENT_SECRET_PATH, GDocDown.SCOPES)
-            flow.user_agent = GDocDown.APPLICATION_NAME
-            credentials = oauth2client.tools.run(flow, store)
+            flow.user_agent = GDocDown.APPLICATION_NAME            
+            parser = argparse.ArgumentParser(
+                description=__doc__,
+                formatter_class=argparse.RawDescriptionHelpFormatter,
+                parents=[oauth2client_tools.argparser])
+            flags = parser.parse_args([])
+            credentials = oauth2client_tools.run_flow(flow, store, flags)
 
-        self.credentials = credentials
+        return credentials
 
-    def authenticate(self):
-        """ Authenticate with Google server """
-        http = self.credentials.authorize(httplib2.Http())
-        self.service = apiclient.discovery.build('drive', 'v3', http=http)
+    def authenticate(self, credentials):
+        """ Authenticate with Google server 
+
+        Returns:
+            :obj:`apiclient.discovery.Resource`: A Resource object with methods for interacting with the service
+        """
+        return apiclient.discovery.build('drive', 'v3', credentials=credentials)
 
     def download(self, gdoc_file, format='docx', out_path='.', extension=None):
         """
