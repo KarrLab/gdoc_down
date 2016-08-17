@@ -63,7 +63,7 @@ author = 'Jonathan Karr'
 # built documents.
 #
 # The short X.Y version.
-version = gdoc_down.__version__.encode('utf-8')
+version = gdoc_down.__version__
 # The full version, including alpha/beta/rc tags.
 release = version
 

@@ -4,10 +4,10 @@ gdoc_down package
 Submodules
 ----------
 
-gdoc_down.gdoc2tex module
--------------------------
+gdoc_down.core module
+---------------------
 
-.. automodule:: gdoc_down.gdoc2tex
+.. automodule:: gdoc_down.core
     :members:
     :undoc-members:
     :show-inheritance:
