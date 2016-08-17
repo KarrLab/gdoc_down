@@ -1,3 +1,6 @@
+# Google API authorization
+gdoc_down/client.json
+
 # license
 include LICENSE
 

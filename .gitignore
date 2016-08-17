@@ -19,4 +19,4 @@ README.rst
 docs/_build
 
 # credentials
-client.json
+auth.json
