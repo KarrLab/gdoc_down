@@ -208,6 +208,7 @@ class GDocDown(object):
         html_content = pattern.sub('', html_content)
 
         """ substitute character entities """
+        html_content = html_content.replace('&nbsp;', ' ')
         html_content = str(BeautifulSoup(html_content, 'html.parser'))
 
         """ replace comments with PDF comments (using `pdfcomment` package) """
