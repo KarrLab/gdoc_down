@@ -7,6 +7,7 @@ Save the content of a Google document to a local file.
 :License: MIT
 """
 
+from bs4 import BeautifulSoup
 from oauth2client import tools as oauth2client_tools
 from xml.etree import ElementTree
 import apiclient
@@ -74,7 +75,7 @@ class GDocDown(object):
     def get_credentials(self):
         """ Get and save user credentials from Google. If credentials haven't already been 
         stored, or if the stored credentials are invalid, obtain the new credentials. 
-        
+
         Retuns:
             :obj:`oauth2client.client.OAuth2Credentials`: Credentials object for OAuth 2.0.
         """
@@ -82,7 +83,7 @@ class GDocDown(object):
         credentials = store.get()
         if not credentials or credentials.invalid:
             flow = oauth2client.client.flow_from_clientsecrets(GDocDown.CLIENT_SECRET_PATH, GDocDown.SCOPES)
-            flow.user_agent = GDocDown.APPLICATION_NAME            
+            flow.user_agent = GDocDown.APPLICATION_NAME
             parser = argparse.ArgumentParser(
                 description=__doc__,
                 formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -179,36 +180,35 @@ class GDocDown(object):
         * Replace comments with PDF comments (using `pdfcomment` package)
 
         Args:
-            html_content (:obj:`str`): HTML version of Google document
+            html_content (:obj:`bytes`): HTML version of Google document
 
         Returns:
-            :obj:`str`: formatted LaTeX
+            :obj:`bytes`: formatted LaTeX
         """
 
         # decode content
         html_content = html_content.decode('utf-8')
 
-        """ replace HTML characters with LaTeX commands """
-        html_content = html_content \
-            .replace(
-                '<meta content="text/html; charset=UTF-8" http-equiv="content-type">',
-                '<meta content="text/html; charset=UTF-8" http-equiv="content-type"/>') \
-            .replace('<hr style="page-break-before:always;display:none;">', '') \
-            .replace("<br>",  "\n") \
-            .replace("&nbsp;",  " ") \
-            .replace("&Ooml;",  '\\"O ') \
-            .replace("&ooml;",  '\\"o ') \
-            .replace("&Uuml;",  '\\"U ') \
-            .replace("&ouml;",  '\\"u ') \
-            .replace("&ndash;", '--') \
-            .replace("&mdash;", '---') \
-            .replace("&lsquo;", "`") \
-            .replace("&rsquo;", "'") \
-            .replace("&sim;", "~")
+        """ remove unnecessary content """
+        # head
+        pattern = re.compile('<head>.*</head>')
+        html_content = pattern.sub('', html_content)
 
-        """ remove images """
+        # style
+        pattern = re.compile(' style=".*?"')
+        html_content = pattern.sub('', html_content)
+
+        # horizontal and break lines
+        html_content = html_content \
+            .replace('<hr style="page-break-before:always;display:none;">', '') \
+            .replace("<br>",  "\n")
+
+        # images
         pattern = re.compile('<img.*?>')
         html_content = pattern.sub('', html_content)
+
+        """ substitute character entities """
+        html_content = str(BeautifulSoup(html_content, 'html.parser'))
 
         """ replace comments with PDF comments (using `pdfcomment` package) """
         # parse html content

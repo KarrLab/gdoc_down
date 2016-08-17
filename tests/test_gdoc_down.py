@@ -25,7 +25,7 @@ if sys.version_info < (3, 0, 0):
     import rtf2xml.ParseRtf
 
 
-class TestGdocDown(unittest.TestCase):
+class TestGDocDown(unittest.TestCase):
 
     FIXTURE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures', 'example.gdoc')
 
@@ -53,7 +53,7 @@ class TestGdocDown(unittest.TestCase):
 
         # check that file has correct content
         with open(os.path.join(self.out_dir, 'example-out.text'), 'r') as file:
-            self.assertEqual(file.read().strip(), 'gdoc-down example file')
+            self.assertRegexpMatches(file.read().strip(), 'gdoc-down example file')
 
     def test_cli_2docx(self):
         with cli(argv=['-f', 'docx', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
@@ -86,7 +86,7 @@ class TestGdocDown(unittest.TestCase):
 
         # check that file has correct content
         doc = opendocument.load(os.path.join(self.out_dir, 'example.odt'))
-        root = ElementTree.fromstring(doc.toXml())
+        root = ElementTree.fromstring(doc.toXml().encode('utf-8'))
         self.assertRegexpMatches(GDocDown.get_element_text(root), 'gdoc-down example file'.replace(' ', ''))
 
     def test_cli_2pdf(self):
@@ -126,7 +126,7 @@ class TestGdocDown(unittest.TestCase):
 
         # check that file has correct content
         with open(os.path.join(self.out_dir, 'example.tex'), 'r') as file:
-            self.assertEqual(file.read().strip(), 'gdoc-down example file')
+            self.assertRegexpMatches(file.read().strip(), 'gdoc-down example file')
 
     def test_cli_2txt(self):
         with cli(argv=['-f', 'txt', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
@@ -137,4 +137,4 @@ class TestGdocDown(unittest.TestCase):
 
         # check that file has correct content
         with open(os.path.join(self.out_dir, 'example.txt'), 'r') as file:
-            self.assertEqual(file.read().strip(), 'gdoc-down example file')
+            self.assertRegexpMatches(file.read().strip(), 'gdoc-down example file')
