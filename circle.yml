@@ -4,6 +4,10 @@ machine:
   post:
     - pyenv global 2.7.11 3.5.1
 dependencies:
+  cache_directories:
+    - /home/ubuntu/virtualenvs/venv-2.7.11
+    - /opt/circleci/python/3.5.1
+    - /opt/circleci/.pyenv/shims
   pre:
     - pip2 install git+git://github.com/jonrkarr/junit2html.git
     - pip3 install git+git://github.com/jonrkarr/junit2html.git
