@@ -16,6 +16,7 @@ dist/
 README.rst
 
 # compiled documentation
+docs/source
 docs/_build
 
 # credentials

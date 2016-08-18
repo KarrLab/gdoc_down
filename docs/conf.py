@@ -357,3 +357,20 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #
 # texinfo_no_detailmenu = False
+
+
+# -- Run sphinx-apidoc within ReadTheDocs on sphinx-build -----------------
+
+from configparser import ConfigParser
+from sphinx import apidoc
+
+def run_apidoc(app):
+    this_dir = os.path.dirname(__file__)
+    parser = ConfigParser()
+    parser.read(os.path.join(this_dir, '..', 'setup.cfg'))
+    packages = parser.get('sphinx-apidocs', 'packages').strip().split('\n')
+    for package in packages:
+        apidoc.main(argv=['sphinx-apidoc', '-f', '-o', os.path.join(this_dir, 'source'), os.path.join(this_dir, '..', package)])
+
+def setup(app):
+    app.connect('builder-inited', run_apidoc)
