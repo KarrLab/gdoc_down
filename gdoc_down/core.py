@@ -175,6 +175,7 @@ class GDocDown(object):
     @staticmethod
     def convert_html_to_latex(html_content):
         """ Format Google document content downloaded in HTML format for LaTeX
+
         * Replace HTML characters with LaTeX commands
         * Remove images
         * Replace comments with PDF comments (using `pdfcomment` package)
