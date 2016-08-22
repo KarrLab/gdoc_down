@@ -9,8 +9,8 @@ dependencies:
     - /opt/circleci/python/3.5.1
     - /opt/circleci/.pyenv/shims
   pre:
-    - pip2 install git+git://github.com/jonrkarr/junit2html.git
-    - pip3 install git+git://github.com/jonrkarr/junit2html.git
+    - pip2 install git+git://github.com/KarrLab/junit2html.git
+    - pip3 install git+git://github.com/KarrLab/junit2html.git
     - pip2 install -e .
     - pip3 install -e .
     - mkdir -p ${HOME}/.gdoc-down
