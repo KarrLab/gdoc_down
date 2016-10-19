@@ -1,11 +1,11 @@
-[![PyPI package](https://img.shields.io/pypi/v/gdoc-down.svg)](https://pypi.python.org/pypi/gdoc-down)
-[![Documentation](https://readthedocs.org/projects/gdoc-down/badge/?version=latest)](http://gdoc-down.readthedocs.org)
-[![Test results](https://circleci.com/gh/KarrLab/gdoc-down.svg?style=shield)](https://circleci.com/gh/KarrLab/gdoc-down)
-[![Test coverage](https://coveralls.io/repos/github/KarrLab/gdoc-down/badge.svg)](https://coveralls.io/github/KarrLab/gdoc-down)
-[![Code analysis](https://codeclimate.com/github/KarrLab/gdoc-down/badges/gpa.svg)](https://codeclimate.com/github/KarrLab/gdoc-down)
-[![License](https://img.shields.io/github/license/KarrLab/gdoc-down.svg)](LICENSE)
+[![PyPI package](https://img.shields.io/pypi/v/gdoc_down.svg)](https://pypi.python.org/pypi/gdoc_down)
+[![Documentation](https://readthedocs.org/projects/gdoc_down/badge/?version=latest)](http://gdoc_down.readthedocs.org)
+[![Test results](https://circleci.com/gh/KarrLab/gdoc_down.svg?style=shield)](https://circleci.com/gh/KarrLab/gdoc_down)
+[![Test coverage](https://coveralls.io/repos/github/KarrLab/gdoc_down/badge.svg)](https://coveralls.io/github/KarrLab/gdoc_down)
+[![Code analysis](https://codeclimate.com/github/KarrLab/gdoc_down/badges/gpa.svg)](https://codeclimate.com/github/KarrLab/gdoc_down)
+[![License](https://img.shields.io/github/license/KarrLab/gdoc_down.svg)](LICENSE)
 
-# `gdoc-down`
+# `gdoc_down`
 API and command line program to save Google documents to local files in several formats:
 * HTML (.html)
 * LaTeX (.tex)
@@ -22,16 +22,16 @@ The software has several special features for handling LaTeX files:
 * The program ignores all page breaks.
 
 The first time the program is called, the program will request access to the user's Google
-account. This will create a client.json file in the users home directory (~/.gdoc-down/client.json).
+account. This will create a client.json file in the users home directory (~/.gdoc_down/client.json).
 
 ## Installation
 ```
-pip install gdoc-down
+pip install gdoc_down
 ```
 
 ## Command line usage
 ```
-usage: gdoc-down (sub-commands ...) [options ...] {arguments ...}
+usage: gdoc_down (sub-commands ...) [options ...] {arguments ...}
 
 Download Google documents to local files in various formats
 
@@ -51,7 +51,7 @@ optional arguments:
 ```
 
 ## Documentation
-Please see the documentation at [Read the Docs](http://gdoc-down.readthedocs.io).
+Please see the documentation at [Read the Docs](http://gdoc_down.readthedocs.io).
 
 ## Tests
 `nose` can be used to run the tests:
@@ -65,7 +65,7 @@ Please note that several additional packages are required for testing (see [test
 The example model is released under the [MIT license](LICENSE).
 
 ## Development team
-`gdoc-down` was developed by [Jonathan Karr](http://www.karrlab.org) at the Icahn School of Medicine at Mount Sinai in New York, USA.
+`gdoc_down` was developed by [Jonathan Karr](http://www.karrlab.org) at the Icahn School of Medicine at Mount Sinai in New York, USA.
 
 ## Questions and comments
 Please contact the [Jonathan Karr](http://www.karrlab.org) with any questions or comments.

@@ -2,7 +2,7 @@
 Save the content of a Google document to a local file.
 
 :Author: Jonathan Karr <karr@mssm.edu>
-:Date: 2017-08-16
+:Date: 2016-08-16
 :Copyright: 2016, Karr Lab
 :License: MIT
 """
@@ -44,11 +44,11 @@ class GDocDown(object):
         service (:obj:`apiclient.discovery.Resource`): A Resource object with methods for interacting with the service
     """
 
-    APPLICATION_NAME = 'gdoc-down'
+    APPLICATION_NAME = 'gdoc_down'
 
     CLIENT_SECRET_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'client.json')
 
-    CREDENTIAL_PATH = os.path.join(os.path.expanduser('~'), '.gdoc-down', 'auth.json')
+    CREDENTIAL_PATH = os.path.join(os.path.expanduser('~'), '.gdoc_down', 'auth.json')
 
     SCOPES = (
         'https://www.googleapis.com/auth/drive',

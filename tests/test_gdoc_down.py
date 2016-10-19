@@ -1,7 +1,7 @@
 """ Tests gdoc_down
 
 :Author: Jonathan Karr <karr@mssm.edu>
-:Date: 2017-08-16
+:Date: 2016-08-16
 :Copyright: 2016, Karr Lab
 :License: MIT
 """
@@ -53,7 +53,7 @@ class TestGDocDown(unittest.TestCase):
 
         # check that file has correct content
         with open(os.path.join(self.out_dir, 'example-out.text'), 'r') as file:
-            self.assertRegexpMatches(file.read().strip(), 'gdoc-down example file')
+            self.assertRegexpMatches(file.read().strip(), 'gdoc_down example file')
 
     def test_cli_2docx(self):
         with cli(argv=['-f', 'docx', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
@@ -64,7 +64,7 @@ class TestGDocDown(unittest.TestCase):
 
         # check that file has correct content
         doc = DocxDocument(os.path.join(self.out_dir, 'example.docx'))
-        self.assertRegexpMatches(doc.paragraphs[0].text, 'gdoc-down example file')
+        self.assertRegexpMatches(doc.paragraphs[0].text, 'gdoc_down example file')
 
     def test_cli_2html(self):
         with cli(argv=['-f', 'html', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
@@ -75,7 +75,7 @@ class TestGDocDown(unittest.TestCase):
 
         # check that file has correct content
         with open(os.path.join(self.out_dir, 'example.html'), 'r') as file:
-            self.assertRegexpMatches(file.read(), 'gdoc-down example file')
+            self.assertRegexpMatches(file.read(), 'gdoc_down example file')
 
     def test_cli_2odt(self):
         with cli(argv=['-f', 'odt', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
@@ -87,7 +87,7 @@ class TestGDocDown(unittest.TestCase):
         # check that file has correct content
         doc = opendocument.load(os.path.join(self.out_dir, 'example.odt'))
         root = ElementTree.fromstring(doc.toXml().encode('utf-8'))
-        self.assertRegexpMatches(GDocDown.get_element_text(root), 'gdoc-down example file'.replace(' ', ''))
+        self.assertRegexpMatches(GDocDown.get_element_text(root), 'gdoc_down example file')
 
     def test_cli_2pdf(self):
         with cli(argv=['-f', 'pdf', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
@@ -115,7 +115,7 @@ class TestGDocDown(unittest.TestCase):
             ).parse_rtf()
 
             root = ElementTree.parse(os.path.join(self.out_dir, 'example.xml'))
-            self.assertRegexpMatches(GDocDown.get_element_text(root.getroot()), 'gdoc-down example file')
+            self.assertRegexpMatches(GDocDown.get_element_text(root.getroot()), 'gdoc_down example file')
 
     def test_cli_2tex(self):
         with cli(argv=['-f', 'tex', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
@@ -126,7 +126,7 @@ class TestGDocDown(unittest.TestCase):
 
         # check that file has correct content
         with open(os.path.join(self.out_dir, 'example.tex'), 'r') as file:
-            self.assertRegexpMatches(file.read().strip(), 'gdoc-down example file')
+            self.assertRegexpMatches(file.read().strip(), 'gdoc_down example file')
 
     def test_cli_2txt(self):
         with cli(argv=['-f', 'txt', '-o', self.out_dir, self.FIXTURE_FILE], credentials=self.credentials) as app:
@@ -137,4 +137,4 @@ class TestGDocDown(unittest.TestCase):
 
         # check that file has correct content
         with open(os.path.join(self.out_dir, 'example.txt'), 'r') as file:
-            self.assertRegexpMatches(file.read().strip(), 'gdoc-down example file')
+            self.assertRegexpMatches(file.read().strip(), 'gdoc_down example file')

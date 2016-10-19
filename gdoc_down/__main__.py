@@ -3,7 +3,7 @@ Command line program to save the content of a Google document to a local file in
 formats.
 
 :Author: Jonathan Karr <karr@mssm.edu>
-:Date: 2017-08-16
+:Date: 2016-08-16
 :Copyright: 2016, Karr Lab
 :License: MIT
 """
@@ -36,7 +36,7 @@ class App(CementApp):
     """ Command line application """
 
     class Meta:
-        label = 'gdoc-down'
+        label = 'gdoc_down'
         base_controller = 'base'
         handlers = [BaseController]
 

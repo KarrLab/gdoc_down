@@ -6,11 +6,11 @@ import os
 install_requires = [line.rstrip() for line in open('requirements.txt')]
 
 setup(
-    name="gdoc-down",
+    name="gdoc_down",
     version=gdoc_down.__version__,
     description="Download Google documents to files",
-    url="https://github.com/KarrLab/gdoc-down",
-    download_url='https://github.com/KarrLab/gdoc-down/tarball/{}'.format(gdoc_down.__version__),
+    url="https://github.com/KarrLab/gdoc_down",
+    download_url='https://github.com/KarrLab/gdoc_down/tarball/{}'.format(gdoc_down.__version__),
     author="Jonathan Karr",
     author_email="jonrkarr@gmail.com",
     license="MIT",
@@ -31,7 +31,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'gdoc-down = gdoc_down.__main__:main',
+            'gdoc_down = gdoc_down.__main__:main',
         ],
     },
 )

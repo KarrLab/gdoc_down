@@ -13,8 +13,8 @@ dependencies:
     - pip3 install git+git://github.com/KarrLab/junit2html.git
     - pip2 install -e .
     - pip3 install -e .
-    - mkdir -p ${HOME}/.gdoc-down
-    - echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/.gdoc-down/service-key.json
+    - mkdir -p ${HOME}/.gdoc_down
+    - echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/.gdoc_down/service-key.json
     - pip2 install Karr-Lab-build-utils
     - pip3 install Karr-Lab-build-utils
     - karr-lab-build-utils-2 install-requirements

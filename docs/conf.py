@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# gdoc-down documentation build configuration file, created by
+# gdoc_down documentation build configuration file, created by
 # sphinx-quickstart on Tue Aug 16 16:40:55 2016.
 #
 # This file is execfile()d with the current directory set to its
@@ -54,7 +54,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'gdoc-down'
+project = 'gdoc_down'
 copyright = u'2016, Karr Lab'
 author = 'Jonathan Karr'
 
@@ -154,7 +154,7 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = 'gdoc-down v0.0.1'
+# html_title = 'gdoc_down v0.0.1'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -254,7 +254,7 @@ html_show_copyright = True
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'gdoc-downdoc'
+htmlhelp_basename = 'gdoc_downdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -280,7 +280,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'gdoc-down.tex', 'gdoc-down Documentation',
+    (master_doc, 'gdoc_down.tex', 'gdoc_down Documentation',
      'Jonathan Karr', 'manual'),
 ]
 
@@ -322,7 +322,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'gdoc-down', 'gdoc-down Documentation',
+    (master_doc, 'gdoc_down', 'gdoc_down Documentation',
      [author], 1)
 ]
 
@@ -337,8 +337,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'gdoc-down', 'gdoc-down Documentation',
-     author, 'gdoc-down', 'One line description of project.',
+    (master_doc, 'gdoc_down', 'gdoc_down Documentation',
+     author, 'gdoc_down', 'One line description of project.',
      'Miscellaneous'),
 ]
 

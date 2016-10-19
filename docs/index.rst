@@ -1,9 +1,9 @@
-.. gdoc-down documentation master file, created by
+.. gdoc_down documentation master file, created by
    sphinx-quickstart on Tue Aug 16 16:40:55 2016.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to gdoc-down's documentation!
+Welcome to gdoc_down's documentation!
 =====================================
 
 Contents:
