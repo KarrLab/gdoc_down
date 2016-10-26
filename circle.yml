@@ -9,14 +9,11 @@ dependencies:
     - /opt/circleci/python/3.5.2
     - /opt/circleci/.pyenv/shims
   pre:
-    - pip2 install -U pip
-    - pip2 install -U pip
+    - pip2 install -e .
+    - pip3 install -e .
 
-    - pip2 install --process-dependency-links -e .
-    - pip3 install --process-dependency-links -e .
-
-    - pip2 install -U --process-dependency-links git+https://github.com/KarrLab/Karr-Lab-build-utils.git
-    - pip3 install -U --process-dependency-links git+https://github.com/KarrLab/Karr-Lab-build-utils.git
+    - pip2 install git+https://github.com/KarrLab/Karr-Lab-build-utils.git
+    - pip3 install git+https://github.com/KarrLab/Karr-Lab-build-utils.git
     - karr-lab-build-utils-2 install-requirements
     - karr-lab-build-utils-3 install-requirements
 
