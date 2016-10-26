@@ -7,3 +7,4 @@ oauth2client
 PyOpenSSL
 Sphinx
 sphinx_rtd_theme
+robpol86-sphinxcontrib-googleanalytics
