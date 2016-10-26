@@ -9,8 +9,8 @@ dependencies:
     - /opt/circleci/python/3.5.1
     - /opt/circleci/.pyenv/shims
   pre:
-    - pip2 install -e -U .
-    - pip3 install -e -U .
+    - pip2 install -U -e .
+    - pip3 install -U -e .
     - mkdir -p ${HOME}/.gdoc_down
     - echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/.gdoc_down/service-key.json
     - pip2 install -U git+git://github.com/KarrLab/Karr-Lab-build-utils.git
