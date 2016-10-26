@@ -1,22 +1,27 @@
 machine:
   python:
-    version: 2.7.11
+    version: 2.7.12
   post:
-    - pyenv global 2.7.11 3.5.1
+    - pyenv global 2.7.12 3.5.2
 dependencies:
   cache_directories:
-    - /home/ubuntu/virtualenvs/venv-2.7.11
-    - /opt/circleci/python/3.5.1
+    - /home/ubuntu/virtualenvs/venv-2.7.12
+    - /opt/circleci/python/3.5.2
     - /opt/circleci/.pyenv/shims
   pre:
-    - pip2 install -U -e .
-    - pip3 install -U -e .
-    - mkdir -p ${HOME}/.gdoc_down
-    - echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/.gdoc_down/service-key.json
-    - pip2 install -U git+git://github.com/KarrLab/Karr-Lab-build-utils.git
-    - pip3 install -U git+git://github.com/KarrLab/Karr-Lab-build-utils.git
+    - pip2 install -U pip
+    - pip2 install -U pip
+
+    - pip2 install --process-dependency-links -e .
+    - pip3 install --process-dependency-links -e .
+
+    - pip2 install -U --process-dependency-links git+git://github.com/KarrLab/Karr-Lab-build-utils.git
+    - pip3 install -U --process-dependency-links git+git://github.com/KarrLab/Karr-Lab-build-utils.git
     - karr-lab-build-utils-2 install-requirements
     - karr-lab-build-utils-3 install-requirements
+
+    - mkdir -p ${HOME}/.gdoc_down
+    - echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/.gdoc_down/service-key.json    
 test:
   override:
     - karr-lab-build-utils-2 run-tests tests --with-xunit --with-coverage
