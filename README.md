@@ -4,6 +4,7 @@
 [![Test coverage](https://coveralls.io/repos/github/KarrLab/gdoc_down/badge.svg)](https://coveralls.io/github/KarrLab/gdoc_down)
 [![Code analysis](https://codeclimate.com/github/KarrLab/gdoc_down/badges/gpa.svg)](https://codeclimate.com/github/KarrLab/gdoc_down)
 [![License](https://img.shields.io/github/license/KarrLab/gdoc_down.svg)](LICENSE)
+![Analytics](https://ga-beacon.appspot.com/UA-86759801-1/gdoc_down/README.md?pixel)
 
 # `gdoc_down`
 API and command line program to save Google documents to local files in several formats:
