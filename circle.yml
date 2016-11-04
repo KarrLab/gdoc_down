@@ -8,7 +8,7 @@ dependencies:
     - /home/ubuntu/virtualenvs/venv-2.7.12
     - /opt/circleci/python/3.5.2
     - /opt/circleci/.pyenv/shims
-  pre:
+  override:
     - pip2 install -e .
     - pip3 install -e .
 
