@@ -12,8 +12,8 @@ dependencies:
     - pip2 install -e .
     - pip3 install -e .
 
-    - pip2 install -U -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git
-    - pip3 install -U -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git
+    - pip2 install -U -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
+    - pip3 install -U -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
     
     - karr-lab-build-utils-2 install-requirements
     - karr-lab-build-utils-3 install-requirements
