@@ -17,9 +17,6 @@ dependencies:
     
     - karr-lab-build-utils-2 install-requirements
     - karr-lab-build-utils-3 install-requirements
-
-    - mkdir -p ${HOME}/.gdoc_down
-    - echo $GCLOUD_SERVICE_KEY | base64 --decode > ${HOME}/.gdoc_down/service-key.json    
 test:
   override:
     - karr-lab-build-utils-2 run-tests tests --with-xunit --with-coverage

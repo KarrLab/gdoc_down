@@ -2,7 +2,8 @@
 *.pyc
 
 # cache
-__pycache__
+__pycache__/
+.cache/
 
 #distribution files
 build/
@@ -20,4 +21,4 @@ docs/source
 docs/_build
 
 # credentials
-auth.json
+tests/fixtures/secret/

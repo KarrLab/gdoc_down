@@ -14,6 +14,7 @@ from oauth2client.client import GoogleCredentials
 from odf import opendocument
 from odf import text as odf_text
 from xml.etree import ElementTree
+import base64
 import os
 import sys
 import shutil
@@ -32,7 +33,15 @@ class TestGDocDown(unittest.TestCase):
     def setUp(self):
         # create temporary directory for downloaded files
         self.out_dir = tempfile.mkdtemp()
-        if os.getenv('CIRCLECI'):
+
+        google_application_credentials_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures', 'secret', 'GOOGLE_APPLICATION_CREDENTIALS')
+        if os.getenv('GCLOUD_SERVICE_KEY'):
+            with open(google_application_credentials_path, 'w') as file:
+                file.write(base64.b64decode(os.getenv('GCLOUD_SERVICE_KEY')))
+            os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = google_application_credentials_path
+            self.credentials = GoogleCredentials.get_application_default()
+        elif os.path.isfile(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures', 'secret', 'GOOGLE_APPLICATION_CREDENTIALS')):
+            os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = google_application_credentials_path
             self.credentials = GoogleCredentials.get_application_default()
         else:
             self.credentials = None
