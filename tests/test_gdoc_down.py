@@ -39,7 +39,7 @@ class TestGDocDown(unittest.TestCase):
             secret_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures', 'secret')
             if not os.path.isdir(secret_dir):
                 os.makedirs(secret_dir)
-            with open(google_application_credentials_path, 'w') as file:
+            with open(google_application_credentials_path, 'wb') as file:
                 file.write(base64.b64decode(os.getenv('GCLOUD_SERVICE_KEY')))
             os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = google_application_credentials_path
             self.credentials = GoogleCredentials.get_application_default()
