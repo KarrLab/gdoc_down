@@ -23,7 +23,8 @@ jobs:
       - save_cache:
           key: projectname-{{ checksum "requirements.txt" }}
           paths:
-            - /usr/local
+            - /usr/local/lib/python2.7/site-packages
+            - /usr/local/lib/python3.6/site-packages
 
       - run: pip2 install -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
       - run: karr-lab-build-utils-2 run-tests tests --with-xunit --with-coverage
