@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: /root
+    working_directory: /root/project
     docker:
       - image: karrlab/build:latest
     steps:
@@ -32,15 +32,15 @@ jobs:
       - run: karr-lab-build-utils-3 run-tests tests --with-xunit --with-coverage
 
       - store_test_results:
-          path: /root/tests/reports
+          path: /root/project/tests/reports
       - store_artifacts:
-          path: /root/.coverage.2.7.13
+          path: /root/project/.coverage.2.7.13
           destination: .coverage.2.7.13
       - store_artifacts:
-          path: /root/.coverage.3.6.1
+          path: /root/project/.coverage.3.6.1
           destination: .coverage.3.6.1      
       
       - run: karr-lab-build-utils make-and-archive-reports
       - store_artifacts:
-          path: /root/docs/_build/html
+          path: /root/project/docs/_build/html
           destination: docs
