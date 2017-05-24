@@ -3,14 +3,15 @@ jobs:
   build:
     working_directory: /root/project
     docker:
-      - image: karrlab/build:0.0.2
+      - image: karrlab/build:0.0.5
     steps:
       - checkout
       
       - restore_cache:
           keys:
-            - projectname-{{ checksum "requirements.txt" }}
-            - projectname-
+            - cache-v0-{{ .Branch }}-{{ checksum "requirements.txt" }}
+            - cache-v0-{{ .Branch }}-
+            - cache-v0-
       
       - run: pip2 install -e .            
       - run: pip2 install -U -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
