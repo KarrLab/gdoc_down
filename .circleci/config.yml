@@ -36,7 +36,7 @@ jobs:
           pip3 install -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
           karr-lab-build-utils-3 run-tests tests --with-xunit --with-coverage
 
-            karr-lab-build-utils make-and-archive-reports
+          karr-lab-build-utils make-and-archive-reports
 
       - store_test_results:
           path: /root/project/tests/reports
