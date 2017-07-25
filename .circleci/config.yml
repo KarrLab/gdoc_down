@@ -31,12 +31,28 @@ jobs:
           set +e
 
           pip2 install -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
+          RESULT=$?
+          if [ $RESULT -ne 0 ]; then
+            exit $RESULT
+          fi
           karr-lab-build-utils-2 run-tests tests --with-xunit --with-coverage
+          RESULT2=$?
 
           pip3 install -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
+          RESULT=$?
+          if [ $RESULT -ne 0 ]; then
+            exit $RESULT
+          fi
           karr-lab-build-utils-3 run-tests tests --with-xunit --with-coverage
+          RESULT3=$?
 
           karr-lab-build-utils make-and-archive-reports
+
+          if [[ $RESULT2 -eq 0 && $RESULT3 -eq 0 ]]; then
+            exit 0
+          else
+            exit 1
+          fi
 
       - store_test_results:
           path: /root/project/tests/reports
