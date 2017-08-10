@@ -53,8 +53,8 @@ class TestGDocDown(unittest.TestCase):
         # cleanup temporary directory
         shutil.rmtree(self.out_dir)
 
-    def test_get_gdoc_id(self):
-        self.assertEqual(GDocDown.get_gdoc_id(self.FIXTURE_FILE), '1mgPojZVReTAMBIVvt6LSQ59AGTsxx2-myLR9oIYIJ2s')
+    def test_get_google_id(self):
+        self.assertEqual(GDocDown.get_google_id(self.FIXTURE_FILE), '1mgPojZVReTAMBIVvt6LSQ59AGTsxx2-myLR9oIYIJ2s')
 
     def test_api_txt(self):
         GDocDown(credentials=self.credentials).download(self.FIXTURE_FILE,
