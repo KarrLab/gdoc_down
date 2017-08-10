@@ -122,7 +122,7 @@ class GDocDown(object):
         """
 
         _, google_file_ext = os.path.splitext(google_file)
-        if google_file_ext == 'gdoc':
+        if google_file_ext == '.gdoc':
             if format == 'docx':
                 export_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             elif format == 'epub':
