@@ -1,5 +1,5 @@
 """
-Save the content of a Google document to a local file.
+Save the content of a Google document, presentation, or workbook to a local file.
 
 :Author: Jonathan Karr <karr@mssm.edu>
 :Date: 2016-08-16
@@ -19,22 +19,30 @@ import os
 
 
 class GDocDown(object):
-    """ Downloads Google documents to several formats
+    """ Downloads Google documents, presentations, and workbooks to several formats
 
-    - HTML (.html)
-    - LaTeX (.tex)
-    - Open Office document (.odt)
-    - Plain text file (.txt)
-    - Portable document format (.pdf)
-    - Rich text document (.rtf)
-    - Word document (.docx)
+    * CSV (.csv)
+    * EPUB (.epub)
+    * Excel workbook (.xlsx)
+    * HTML (.html)
+    * Image (.png, .jpg, .svg)
+    * LaTeX (.tex)
+    * Open Office document (.odt)
+    * Open Office presentation (.odp)
+    * Open Office workbook (.ods)
+    * Plain text file (.txt)
+    * Portable document format (.pdf)
+    * Powerpoint presentation (.pptx)
+    * Rich text document (.rtf)
+    * TSV (.tsv)
+    * Word document (.docx)
 
     The class has several special features for handling LaTeX files:
 
-    - The program ignores all images. This allows the user to place images inside the Google 
+    * The program ignores all images. This allows the user to place images inside the Google
       document for convenience and to use \includegraphics to embed images in compile PDF files.
-    - The program will convert all Google document comments to PDF comments.
-    - The program ignores all page breaks.
+    * The program will convert all Google document comments to PDF comments.
+    * The program ignores all page breaks.
 
     The first time the program is called, the program will request access to the user's Google
     account. This will create a client.json file.
@@ -73,8 +81,8 @@ class GDocDown(object):
         self.service = service
 
     def get_credentials(self):
-        """ Get and save user credentials from Google. If credentials haven't already been 
-        stored, or if the stored credentials are invalid, obtain the new credentials. 
+        """ Get and save user credentials from Google. If credentials haven't already been
+        stored, or if the stored credentials are invalid, obtain the new credentials.
 
         Retuns:
             :obj:`oauth2client.client.OAuth2Credentials`: Credentials object for OAuth 2.0.
@@ -94,46 +102,84 @@ class GDocDown(object):
         return credentials
 
     def authenticate(self, credentials):
-        """ Authenticate with Google server 
+        """ Authenticate with Google server
 
         Returns:
             :obj:`apiclient.discovery.Resource`: A Resource object with methods for interacting with the service
         """
         return apiclient.discovery.build('drive', 'v3', credentials=credentials)
 
-    def download(self, gdoc_file, format='docx', out_path='.', extension=None):
+    def download(self, google_file, format='docx', out_path='.', extension=None):
         """
         Args:
-            gdoc_file (:obj:`str`): path to Google document
-            format (:obj:`str`, optional): desired output format (docx, html, odt, pdf, rtf, tex, txt)
-            out_path (:obj:`str`, optional): path to save document
-            extension (:obj:`str`, optional): extension to document
+            google_file (:obj:`str`): path to Google document, presentation, or workbook
+            format (:obj:`str`, optional): desired output format (docx, html, odt, pdf, rtf, tex, txt, etc)
+            out_path (:obj:`str`, optional): path to save document, presentation, or workbook
+            extension (:obj:`str`, optional): extension to document, presentation, or workbook
 
         Raises:
             obj:`Exception`: if format unknown or if ouput file path and extension cannot both be specified
         """
 
-        if format == 'docx':
-            export_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        elif format == 'html':
-            export_type = 'text/html'
-        elif format == 'odt':
-            export_type = 'application/vnd.oasis.opendocument.text'
-        elif format == 'pdf':
-            export_type = 'application/pdf'
-        elif format == 'rtf':
-            export_type = 'application/rtf'
-        elif format == 'tex':
-            export_type = 'text/html'
-        elif format == 'txt':
-            export_type = 'text/plain'
+        _, google_file_ext = os.path.splitext(google_file)
+        if google_file_ext == 'gdoc':
+            if format == 'docx':
+                export_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            elif format == 'epub':
+                export_type = 'application/epub+zip'
+            elif format == 'html':
+                export_type = 'text/html'
+            elif format == 'odt':
+                export_type = 'application/vnd.oasis.opendocument.text'
+            elif format == 'pdf':
+                export_type = 'application/pdf'
+            elif format == 'rtf':
+                export_type = 'application/rtf'
+            elif format == 'tex':
+                export_type = 'text/html'
+            elif format == 'txt':
+                export_type = 'text/plain'
+            else:
+                raise Exception('Unknown format "{}"'.format(format))
+        elif google_file_ext == '.gsheet':
+            if format == 'csv':
+                export_type = 'text/csv'
+            elif format == 'html':
+                export_type = 'application/zip'
+            elif format == 'ods':
+                export_type = 'application/x-vnd.oasis.opendocument.spreadsheet'
+            elif format == 'pdf':
+                export_type = 'application/pdf'
+            elif format == 'tsv':
+                export_type = '    text/tab-separated-values'
+            elif format == 'xlsx':
+                export_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            else:
+                raise Exception('Unknown format "{}"'.format(format))
+        elif google_file_ext == '.gslides':
+            if format == 'jpg':
+                export_type = 'image/jpeg'
+            elif format == 'odp':
+                export_type = 'application/vnd.oasis.opendocument.presentation'
+            elif format == 'pdf':
+                export_type = 'application/pdf'
+            elif format == 'png':
+                export_type = 'image/png'
+            elif format == 'pptx':
+                export_type = 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+            elif format == 'svg':
+                export_type = 'image/svg+xml'
+            elif format == 'txt':
+                export_type = 'text/plain'
+            else:
+                raise Exception('Unknown format "{}"'.format(format))
         else:
-            raise Exception('Unknown format "{}"'.format(format))
+            raise Exception('Unknown Google document extension "{}"'.format(google_file_ext))
 
         if os.path.isdir(out_path):
             if extension is None:
                 extension = format
-            root, _ = os.path.splitext(os.path.basename(gdoc_file))
+            root, _ = os.path.splitext(os.path.basename(google_file))
             out_file = os.path.join(out_path, root + "." + extension)
         else:
             if extension is None:
@@ -142,10 +188,10 @@ class GDocDown(object):
                 raise Exception('Ouput file path and extension cannot both be specified')
 
         # get google document id
-        gdoc_id = self.get_gdoc_id(gdoc_file)
+        google_id = self.get_google_id(google_file)
 
         # download file from Google
-        content = self.service.files().export(fileId=gdoc_id, mimeType=export_type).execute()
+        content = self.service.files().export(fileId=google_id, mimeType=export_type).execute()
 
         # convert content as requested
         if format == 'txt':
@@ -158,17 +204,17 @@ class GDocDown(object):
             file.write(content)
 
     @staticmethod
-    def get_gdoc_id(gdoc_file):
-        """ Get Google document id
+    def get_google_id(google_file):
+        """ Get Google document, presentation, or workbook id
 
         Args:
-            gdoc_file (:obj:`str`): path to Google document
+            google_file (:obj:`str`): path to Google document, presentation, or workbook
 
         Returns:
-            :obj:`str`: id of Google document
+            :obj:`str`: id of Google document, presentation, or workbook
         """
 
-        with open(gdoc_file) as data_file:
+        with open(google_file) as data_file:
             data = json.load(data_file)
         return data['doc_id']
 

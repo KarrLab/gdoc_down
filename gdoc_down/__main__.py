@@ -1,5 +1,5 @@
 """
-Command line program to save the content of a Google document to a local file in several 
+Command line program to save the content of a Google document, presentation, or workbook to a local file in several
 formats.
 
 :Author: Jonathan Karr <karr@mssm.edu>
@@ -17,11 +17,11 @@ class BaseController(CementBaseController):
 
     class Meta:
         label = 'base'
-        description = "Download Google documents to local files in various formats"
+        description = "Download a Google document, presentation, or workbook to a local file"
         arguments = [
-            (['gdoc_file'], dict(type=str, help='path to Google document')),
-            (['--format', '-f'], dict(type=str, help='output format (docx, html, odft, pdf, rtf, tex, txt)', default='docx')),
-            (['--out_path', '-o'], dict(type=str, help='path where Google document should be downloaded', default='.')),
+            (['google_file'], dict(type=str, help='path to Google document, presentation, or workbook')),
+            (['--format', '-f'], dict(type=str, help='output format (csv, docx, epub, html, jpg, odft, odp, ods, pdf, pptx, png, rtf, svg, tsv, tex, txt, xlsx)', default='docx')),
+            (['--out_path', '-o'], dict(type=str, help='path where Google document, presentation, or workbook should be downloaded', default='.')),
             (['--extension', '-e'], dict(type=str, help='output extension', default=None)),
         ]
 
@@ -29,7 +29,7 @@ class BaseController(CementBaseController):
     def default(self):
         args = self.app.pargs
 
-        GDocDown(credentials=self.app.credentials).download(args.gdoc_file, format=args.format, out_path=args.out_path, extension=args.extension)
+        GDocDown(credentials=self.app.credentials).download(args.google_file, format=args.format, out_path=args.out_path, extension=args.extension)
 
 
 class App(CementApp):

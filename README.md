@@ -7,16 +7,26 @@
 ![Analytics](https://ga-beacon.appspot.com/UA-86759801-1/gdoc_down/README.md?pixel)
 
 # `gdoc_down`
-API and command line program to save Google documents to local files in several formats:
+API and command line program to save Google documents, presentations, and worksheets to local files in several formats:
+
+* CSV (.csv)
+* EPUB (.epub)
+* Excel workbook (.xlsx)
 * HTML (.html)
+* Image (.png, .jpg, .svg)
 * LaTeX (.tex)
-* Open document format (.odt)
-* Plain text (.txt)
+* Open Office document (.odt)
+* Open Office presentation (.odp)
+* Open Office workbook (.ods)
+* Plain text file (.txt)    
 * Portable document format (.pdf)
-* Rich text format (.rtf)
-* Word documents (.docx)
+* Powerpoint presentation (.pptx)
+* Rich text document (.rtf)
+* TSV (.tsv)
+* Word document (.docx)
 
 The software has several special features for handling LaTeX files:
+
 * The program ignores all images. This allows the user to place images inside the Google 
   document for convenience and to use \includegraphics to embed images in compile PDF files.
 * The program will convert all Google document comments to PDF comments.
@@ -34,19 +44,21 @@ pip install gdoc_down
 ```
 usage: gdoc_down (sub-commands ...) [options ...] {arguments ...}
 
-Download Google documents to local files in various formats
+Download a Google document, presentation, or workbook to a local file
 
 positional arguments:
-  gdoc_file             path to Google document
+  google_file           path to Google document, presentation, or workbook
 
 optional arguments:
   -h, --help            show this help message and exit
   --debug               toggle debug output
   --quiet               suppress all output
   --format FORMAT, -f FORMAT
-                        output format (docx, html, odft, pdf, rtf, tex, txt)
+                        output format (csv, docx, epub, html, jpg, odft, odp,
+                        ods, pdf, pptx, png, rtf, svg, tsv, tex, txt, xlsx)
   --out_path OUT_PATH, -o OUT_PATH
-                        path where Google document should be downloaded
+                        path where Google document, presentation, or workbook
+                        should be downloaded
   --extension EXTENSION, -e EXTENSION
                         output extension
 ```
