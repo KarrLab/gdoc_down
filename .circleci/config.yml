@@ -9,9 +9,9 @@ jobs:
       
       - restore_cache:
           keys:
-            - cache-v0-{{ .Branch }}-{{ checksum "requirements.txt" }}
-            - cache-v0-{{ .Branch }}-
-            - cache-v0-
+            - cache-v1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+            - cache-v1-{{ .Branch }}-
+            - cache-v1-
       
       - run: pip2 install -e .            
       - run: pip2 install -U -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
@@ -22,7 +22,7 @@ jobs:
       - run: karr-lab-build-utils-3 install-requirements
       
       - save_cache:
-          key: cache-v0-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: cache-v1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - /usr/local/lib/python2.7/site-packages
             - /usr/local/lib/python3.6/site-packages
