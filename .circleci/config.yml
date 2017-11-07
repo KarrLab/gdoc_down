@@ -14,12 +14,12 @@ jobs:
             - cache-v1-
       
       - run: pip2 install -e .            
-      - run: pip2 install -U -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
-      - run: karr-lab-build-utils-2 install-requirements
+      - run: pip2 install -U -e git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
+      - run: karr_lab_build_utils2 install-requirements
 
       - run: pip3 install -e .
-      - run: pip3 install -U -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
-      - run: karr-lab-build-utils-3 install-requirements
+      - run: pip3 install -U -e git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
+      - run: karr_lab_build_utils3 install-requirements
       
       - save_cache:
           key: cache-v1-{{ .Branch }}-{{ checksum "requirements.txt" }}
@@ -30,23 +30,23 @@ jobs:
       - run: |
           set +e
 
-          pip2 install -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
+          pip2 install -e git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
           RESULT=$?
           if [ $RESULT -ne 0 ]; then
             exit $RESULT
           fi
-          karr-lab-build-utils-2 run-tests tests --with-xunit --with-coverage
+          karr_lab_build_utils2 run-tests tests --with-xunit --with-coverage
           RESULT2=$?
 
-          pip3 install -e git+https://github.com/KarrLab/Karr-Lab-build-utils.git#egg=Karr-Lab-build-utils
+          pip3 install -e git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
           RESULT=$?
           if [ $RESULT -ne 0 ]; then
             exit $RESULT
           fi
-          karr-lab-build-utils-3 run-tests tests --with-xunit --with-coverage
+          karr_lab_build_utils3 run-tests tests --with-xunit --with-coverage
           RESULT3=$?
 
-          karr-lab-build-utils make-and-archive-reports
+          karr_lab_build_utils make-and-archive-reports
 
           if [[ $RESULT2 -eq 0 && $RESULT3 -eq 0 ]]; then
             exit 0
