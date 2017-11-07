@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /root/project
     docker:
-      - image: karrlab/build:0.0.6
+      - image: karrlab/build:0.0.7
     steps:
       - checkout
       
@@ -57,11 +57,11 @@ jobs:
       - store_test_results:
           path: /root/project/tests/reports
       - store_artifacts:
-          path: /root/project/.coverage.2.7.13
-          destination: .coverage.2.7.13
+          path: /root/project/.coverage.2.7.14
+          destination: .coverage.2.7.14
       - store_artifacts:
-          path: /root/project/.coverage.3.6.1
-          destination: .coverage.3.6.1
+          path: /root/project/.coverage.3.6.3
+          destination: .coverage.3.6.3
       - store_artifacts:
           path: /root/project/docs/_build/html
           destination: docs
