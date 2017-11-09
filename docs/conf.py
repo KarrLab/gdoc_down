@@ -155,9 +155,9 @@ def linkcode_resolve(domain, info):
         return None
     rel_filename = info['module'].replace('.', '/')
     if os.path.isfile(os.path.join(os.path.dirname(__file__), '..', rel_filename + '.py')):
-        return "https://github.com/KarrLab/{{ package }}/blob/master/{}.py".format(rel_filename)
+        return "https://github.com/KarrLab/gdoc_down/blob/master/{}.py".format(rel_filename)
     else:
-        return "https://github.com/KarrLab/{{ package }}/blob/master/{}/__init__.py".format(rel_filename)
+        return "https://github.com/KarrLab/gdoc_down/blob/master/{}/__init__.py".format(rel_filename)
 
 
 # -- napoleon options -----------------------------------------------------
