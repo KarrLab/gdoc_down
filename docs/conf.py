@@ -17,6 +17,7 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
+import six
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 import gdoc_down
@@ -32,11 +33,19 @@ import gdoc_down
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosectionlabel',
     'sphinx.ext.coverage',
+    'sphinx.ext.imgconverter',
+    'sphinx.ext.linkcode',
+    'sphinx.ext.mathjax',
     'sphinx.ext.napoleon',
-    'sphinx.ext.viewcode',
+    'sphinx.ext.todo',
+    'sphinxcontrib.bibtex',
     'sphinxcontrib.googleanalytics',
 ]
+
+if six.PY3:
+    extensions.append('sphinxcontrib.spelling')
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -119,6 +128,36 @@ pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
+
+
+# -- section/figure/table numbering options -------------------------------
+numfig = True
+numfig_format = {
+    'figure': 'Figure %s',
+    'table': 'Table %s',
+    'code-block': 'Listing %s',
+    'section': 'Section %s',
+}
+
+
+# -- image converter options ----------------------------------------------
+image_converter_args = [
+    '-density', '150',
+    '-quality', '00',
+    ]
+
+
+# -- linkcode options -----------------------------------------------------
+def linkcode_resolve(domain, info):
+    if domain != 'py':
+        return None
+    if not info['module']:
+        return None
+    rel_filename = info['module'].replace('.', '/')
+    if os.path.isfile(os.path.join(os.path.dirname(__file__), '..', rel_filename + '.py')):
+        return "https://github.com/KarrLab/{{ package }}/blob/master/{}.py".format(rel_filename)
+    else:
+        return "https://github.com/KarrLab/{{ package }}/blob/master/{}/__init__.py".format(rel_filename)
 
 
 # -- napoleon options -----------------------------------------------------
