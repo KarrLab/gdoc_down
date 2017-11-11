@@ -20,7 +20,7 @@ class BaseController(CementBaseController):
         description = "Download a Google document, presentation, or workbook to a local file"
         arguments = [
             (['google_file'], dict(type=str, help='path to Google document, presentation, or workbook')),
-            (['--format', '-f'], dict(type=str, help='output format (csv, docx, epub, html, jpg, odft, odp, ods, pdf, pptx, png, rtf, svg, tsv, tex, txt, xlsx)', default='docx')),
+            (['--format', '-f'], dict(type=str, help='output format (csv, docx, epub, html, odft, odp, ods, pdf, pptx, rtf, tsv, tex, txt, xlsx)', default='docx')),
             (['--out_path', '-o'], dict(type=str, help='path where Google document, presentation, or workbook should be downloaded', default='.')),
             (['--extension', '-e'], dict(type=str, help='output extension', default=None)),
         ]
@@ -48,7 +48,3 @@ class App(CementApp):
 def main():
     with App() as app:
         app.run()
-
-
-if __name__ == "__main__":
-    main()

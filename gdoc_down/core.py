@@ -12,10 +12,12 @@ from oauth2client import tools as oauth2client_tools
 from xml.etree import ElementTree
 import apiclient
 import argparse
+import io
 import json
 import re
 import oauth2client
 import os
+import zipfile
 
 
 class GDocDown(object):
@@ -25,7 +27,6 @@ class GDocDown(object):
     * EPUB (.epub)
     * Excel workbook (.xlsx)
     * HTML (.html)
-    * Image (.png, .jpg, .svg)
     * LaTeX (.tex)
     * Open Office document (.odt)
     * Open Office presentation (.odp)
@@ -136,39 +137,35 @@ class GDocDown(object):
             elif format == 'rtf':
                 export_type = 'application/rtf'
             elif format == 'tex':
-                export_type = 'text/html'
+                export_type = 'application/zip'
             elif format == 'txt':
                 export_type = 'text/plain'
+            elif format == 'html.zip':
+                export_type = 'application/zip'
             else:
                 raise Exception('Unknown format "{}"'.format(format))
         elif google_file_ext == '.gsheet':
             if format == 'csv':
                 export_type = 'text/csv'
-            elif format == 'html':
+            elif format == 'html.zip':
                 export_type = 'application/zip'
             elif format == 'ods':
                 export_type = 'application/x-vnd.oasis.opendocument.spreadsheet'
             elif format == 'pdf':
                 export_type = 'application/pdf'
             elif format == 'tsv':
-                export_type = '    text/tab-separated-values'
+                export_type = 'text/tab-separated-values'
             elif format == 'xlsx':
                 export_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             else:
                 raise Exception('Unknown format "{}"'.format(format))
         elif google_file_ext == '.gslides':
-            if format == 'jpg':
-                export_type = 'image/jpeg'
-            elif format == 'odp':
+            if format == 'odp':
                 export_type = 'application/vnd.oasis.opendocument.presentation'
             elif format == 'pdf':
                 export_type = 'application/pdf'
-            elif format == 'png':
-                export_type = 'image/png'
             elif format == 'pptx':
                 export_type = 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-            elif format == 'svg':
-                export_type = 'image/svg+xml'
             elif format == 'txt':
                 export_type = 'text/plain'
             else:
@@ -182,7 +179,7 @@ class GDocDown(object):
             root, _ = os.path.splitext(os.path.basename(google_file))
             out_file = os.path.join(out_path, root + "." + extension)
         else:
-            if extension is None:
+            if extension is None or extension == os.path.splitext(out_path)[1][1:]:
                 out_file = out_path
             else:
                 raise Exception('Ouput file path and extension cannot both be specified')
@@ -219,7 +216,7 @@ class GDocDown(object):
         return data['doc_id']
 
     @staticmethod
-    def convert_html_to_latex(html_content):
+    def convert_html_to_latex(html_zip_content):
         """ Format Google document content downloaded in HTML format for LaTeX
 
         * Replace HTML characters with LaTeX commands
@@ -227,11 +224,16 @@ class GDocDown(object):
         * Replace comments with PDF comments (using `pdfcomment` package)
 
         Args:
-            html_content (:obj:`bytes`): HTML version of Google document
+            html_zip_content (:obj:`bytes`): HTML version of Google document
 
         Returns:
             :obj:`bytes`: formatted LaTeX
         """
+
+        # recode html from zip file
+        zip = zipfile.ZipFile(io.BytesIO(html_zip_content), 'r')
+        filename = next(filename for filename in zip.namelist() if os.path.splitext(filename)[1] == '.html')
+        html_content = zip.read(filename)
 
         # decode content
         html_content = html_content.decode('utf-8')
@@ -262,7 +264,8 @@ class GDocDown(object):
         # parse html content
         root = ElementTree.fromstring(html_content)
 
-        # find and replace comments
+        # find and replace comments: no longer exported by Google Drive
+        """
         comment_id = 0
         while True:
             comment_id = comment_id + 1
@@ -284,6 +287,7 @@ class GDocDown(object):
 
             # remove comment footnote
             comment_greatgrandparent.remove(comment_grandparent)
+        """
 
         # collect body text
         tex_content = ''
