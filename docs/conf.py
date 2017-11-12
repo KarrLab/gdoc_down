@@ -17,7 +17,6 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
-import six
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 import gdoc_down
@@ -42,10 +41,8 @@ extensions = [
     'sphinx.ext.todo',
     'sphinxcontrib.bibtex',
     'sphinxcontrib.googleanalytics',
+    'sphinxcontrib.spelling',
 ]
-
-if six.PY3:
-    extensions.append('sphinxcontrib.spelling')
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
