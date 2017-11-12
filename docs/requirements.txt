@@ -4,6 +4,7 @@ configparser
 google-api-python-client
 httplib2
 oauth2client
+pbr # needed by sphinxcontrib-spelling and must be installed first for Python 2
 PyOpenSSL
 six
 Sphinx >= 1.6
