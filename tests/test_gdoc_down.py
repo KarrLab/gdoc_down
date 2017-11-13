@@ -17,6 +17,7 @@ from xml.etree import ElementTree
 import base64
 import gdoc_down
 import mock
+import oauth2client.tools
 import os
 import sys
 import shutil
@@ -60,6 +61,11 @@ class TestGDocDown(unittest.TestCase):
 
     def test_get_google_id(self):
         self.assertEqual(GDocDown.get_google_id(self.GDOC_FILE), '1mgPojZVReTAMBIVvt6LSQ59AGTsxx2-myLR9oIYIJ2s')
+
+    def test_get_credentials(self):
+        with mock.patch.object(oauth2client.tools, 'run_flow', return_value=self.credentials):
+            gdoc_down = GDocDown()
+        self.assertEqual(gdoc_down.credentials, self.credentials)
 
     def test_api_txt(self):
         GDocDown(credentials=self.credentials).download(self.GDOC_FILE,

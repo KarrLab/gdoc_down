@@ -8,7 +8,6 @@ Save the content of a Google document, presentation, or workbook to a local file
 """
 
 from bs4 import BeautifulSoup
-from oauth2client import tools as oauth2client_tools
 from xml.etree import ElementTree
 import apiclient
 import argparse
@@ -16,6 +15,7 @@ import io
 import json
 import re
 import oauth2client
+import oauth2client.tools
 import os
 import zipfile
 
@@ -96,9 +96,9 @@ class GDocDown(object):
             parser = argparse.ArgumentParser(
                 description=__doc__,
                 formatter_class=argparse.RawDescriptionHelpFormatter,
-                parents=[oauth2client_tools.argparser])
+                parents=[oauth2client.tools.argparser])
             flags = parser.parse_args([])
-            credentials = oauth2client_tools.run_flow(flow, store, flags)
+            credentials = oauth2client.tools.run_flow(flow, store, flags)
 
         return credentials
 
