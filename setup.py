@@ -1,6 +1,16 @@
 from setuptools import setup, find_packages
-import gdoc_down
 import os
+
+# get long description
+if os.path.isfile('README.rst'):
+    with open('README.rst', 'r') as file:
+        long_description = file.read()
+else:
+    long_description = ''
+
+# get version
+with open('gdoc_down/VERSION', 'r') as file:
+    version = file.read().strip()
 
 # parse requirements.txt
 install_requires = [line.rstrip() for line in open('requirements.txt')]
@@ -8,17 +18,21 @@ tests_require = [line.rstrip() for line in open('tests/requirements.txt')]
 
 setup(
     name="gdoc_down",
-    version=gdoc_down.__version__,
+    version=version,
     description="Download Google documents to files",
+    long_description=long_description,
     url="https://github.com/KarrLab/gdoc_down",
-    download_url='https://github.com/KarrLab/gdoc_down/tarball/{}'.format(gdoc_down.__version__),
+    download_url='https://github.com/KarrLab/gdoc_down',
     author="Jonathan Karr",
     author_email="jonrkarr@gmail.com",
     license="MIT",
     keywords='Google documents drive download latex tex html pdf docx',
     packages=find_packages(exclude=['tests', 'tests.*']),
     package_data={
-        'gdoc_down': ['client.json'],
+        'gdoc_down': [
+            'VERSION',
+            'client.json',
+        ],
     },
     install_requires=install_requires,
     tests_require=tests_require,

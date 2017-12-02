@@ -1,3 +1,5 @@
+auth.json
+
 # source for other packages
 src/
 
@@ -18,6 +20,7 @@ tests/reports/
 
 # coverage file
 .coverage*
+htmlcov/
 
 # .rst-formatted README
 README.rst
