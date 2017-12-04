@@ -1,6 +1,6 @@
 docx
 mock
 odfpy
-PyPDF2
-python-docx
+pypdf2
+python_docx
 rtf2xml

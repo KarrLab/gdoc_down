@@ -1,13 +1,13 @@
 bs4
 cement
 configparser
-google-api-python-client
+google_api_python_client
 httplib2
 oauth2client
-PyOpenSSL
+pyopenssl
 six
-Sphinx >= 1.6
+sphinx >= 1.6
 sphinx_rtd_theme
-sphinxcontrib-bibtex
-robpol86-sphinxcontrib-googleanalytics
-sphinxcontrib-spelling
+sphinxcontrib_bibtex
+robpol86_sphinxcontrib_googleanalytics
+sphinxcontrib_spelling

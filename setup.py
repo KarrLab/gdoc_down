@@ -1,41 +1,39 @@
-from setuptools import setup, find_packages
+import setuptools
+try:
+    import pkg_utils
+except ImportError:
+    import pip
+    pip.main(['install', 'git+https://github.com/KarrLab/pkg_utils.git#egg=pkg_utils'])
+    import pkg_utils
 import os
 
-# get long description
-if os.path.isfile('README.rst'):
-    with open('README.rst', 'r') as file:
-        long_description = file.read()
-else:
-    long_description = ''
+name = 'gdoc_down'
+dirname = os.path.dirname(__file__)
 
-# get version
-with open('gdoc_down/VERSION', 'r') as file:
-    version = file.read().strip()
-
-# parse requirements.txt
-install_requires = [line.rstrip() for line in open('requirements.txt')]
-tests_require = [line.rstrip() for line in open('tests/requirements.txt')]
-
-setup(
-    name="gdoc_down",
-    version=version,
+# get package metadata
+md = pkg_utils.get_package_metadata(dirname, name)
+setuptools.setup(
+    name=name,
+    version=md.version,
     description="Download Google documents to files",
-    long_description=long_description,
-    url="https://github.com/KarrLab/gdoc_down",
-    download_url='https://github.com/KarrLab/gdoc_down',
+    long_description=md.long_description,
+    url="https://github.com/KarrLab/" + name,
+    download_url='https://github.com/KarrLab/' + name,
     author="Jonathan Karr",
     author_email="jonrkarr@gmail.com",
     license="MIT",
     keywords='Google documents drive download latex tex html pdf docx',
-    packages=find_packages(exclude=['tests', 'tests.*']),
+    packages=setuptools.find_packages(exclude=['tests', 'tests.*']),
     package_data={
-        'gdoc_down': [
+        name: [
             'VERSION',
             'client.json',
         ],
     },
-    install_requires=install_requires,
-    tests_require=tests_require,
+    install_requires=md.install_requires,
+    extras_require=md.extras_require,
+    tests_require=md.tests_require,
+    dependency_links=md.dependency_links,
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: End Users/Desktop',

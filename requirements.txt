@@ -1,6 +1,6 @@
 bs4
 cement
-google-api-python-client
+google_api_python_client
 httplib2
 oauth2client
-PyOpenSSL
+pyopenssl
