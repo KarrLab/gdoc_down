@@ -39,7 +39,8 @@ jobs:
           karr_lab_build_utils3 make-and-archive-reports
 
           if [[ $RESULT2 -eq 0 && $RESULT3 -eq 0 ]]; then
-            exit 0
+            karr_lab_build_utils3 trigger-tests-of-downstream-dependencies
+            exit $?
           else
             exit 1
           fi
