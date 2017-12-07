@@ -31,16 +31,16 @@ jobs:
           set +e
 
           karr_lab_build_utils2 run-tests tests --with-xunit --with-coverage
-          RESULT2=$?
+          RESULT_PY2=$?
 
           karr_lab_build_utils3 run-tests tests --with-xunit --with-coverage
-          RESULT3=$?
+          RESULT_PY3=$?
 
-          karr_lab_build_utils3 make-and-archive-reports
+          karr_lab_build_utils3 do-post-test-tasks
+          RESULT_POST_TASKS=$?
 
-          if [[ $RESULT2 -eq 0 && $RESULT3 -eq 0 ]]; then
-            karr_lab_build_utils3 trigger-tests-of-downstream-dependencies
-            exit $?
+          if [[ $RESULT_PY2 -eq 0 && $RESULT_PY3 -eq 0 && $RESULT_POST_TASKS ]]; then
+            exit 0
           else
             exit 1
           fi
