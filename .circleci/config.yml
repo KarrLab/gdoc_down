@@ -30,16 +30,16 @@ jobs:
       - run: |
           set +e
 
-          karr_lab_build_utils2 run-tests tests --with-xunit --with-coverage
+          karr_lab_build_utils2 run-tests --with-xunit --with-coverage
           RESULT_PY2=$?
 
-          karr_lab_build_utils3 run-tests tests --with-xunit --with-coverage
+          karr_lab_build_utils3 run-tests --with-xunit --with-coverage
           RESULT_PY3=$?
 
           karr_lab_build_utils3 do-post-test-tasks
           RESULT_POST_TASKS=$?
 
-          if [[ $RESULT_PY2 -eq 0 && $RESULT_PY3 -eq 0 && $RESULT_POST_TASKS ]]; then
+          if [[ $RESULT_PY2 -eq 0 && $RESULT_PY3 -eq 0 && $RESULT_POST_TASKS -eq 0 ]]; then
             exit 0
           else
             exit 1
