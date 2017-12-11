@@ -13,10 +13,12 @@ jobs:
             - cache-v3-{{ .Branch }}-
             - cache-v3-
       
+      - run: pip2 install -U git+https://github.com/KarrLab/pkg_utils.git#egg=pkg_utils
       - run: pip2 install -U git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
       - run: karr_lab_build_utils2 install-requirements
       - run: pip2 install -U -e .[all]
       
+      - run: pip3 install -U git+https://github.com/KarrLab/pkg_utils.git#egg=pkg_utils
       - run: pip3 install -U git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
       - run: karr_lab_build_utils3 install-requirements
       - run: pip3 install -U -e .[all]
