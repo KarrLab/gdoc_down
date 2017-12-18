@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /root/project
     docker:
-      - image: karrlab/build:0.0.16
+      - image: karrlab/build:0.0.18
     steps:
       - checkout
       
@@ -15,12 +15,10 @@ jobs:
       
       - run: pip2 install -U --process-dependency-links git+https://github.com/KarrLab/pkg_utils.git#egg=pkg_utils
       - run: pip2 install -U --process-dependency-links git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
-      - run: karr_lab_build_utils2 install-requirements
       - run: pip2 install -U --process-dependency-links -e .[all]
       
       - run: pip3 install -U --process-dependency-links git+https://github.com/KarrLab/pkg_utils.git#egg=pkg_utils
       - run: pip3 install -U --process-dependency-links git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
-      - run: karr_lab_build_utils3 install-requirements
       - run: pip3 install -U --process-dependency-links -e .[all]
       
       - save_cache:
