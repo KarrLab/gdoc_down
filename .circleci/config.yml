@@ -3,55 +3,90 @@ jobs:
   build:
     working_directory: /root/project
     docker:
-      - image: karrlab/build:0.0.18
+      - image: karrlab/build:0.0.21
+    environment:
+      - TEST_EXIT_CODE_PY2: 0
+      - TEST_EXIT_CODE_PY3: 0
+      - OTHER_EXIT_CODE: 0
     steps:
+      # Clone repository
       - checkout
-      
+
+      # Load packages from cache
       - restore_cache:
           keys:
-            - cache-v3-{{ .Branch }}-{{ checksum "requirements.txt" }}
-            - cache-v3-{{ .Branch }}-
-            - cache-v3-
-      
-      - run: pip2 install -U --process-dependency-links git+https://github.com/KarrLab/pkg_utils.git#egg=pkg_utils
-      - run: pip2 install -U --process-dependency-links git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
-      
-      - run: pip3 install -U --process-dependency-links git+https://github.com/KarrLab/pkg_utils.git#egg=pkg_utils
-      - run: pip3 install -U --process-dependency-links git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
-      
+            - cache-v4-{{ .Branch }}-{{ checksum "requirements.txt" }}
+            - cache-v4-{{ .Branch }}-
+            - cache-v4-
+
+      # Python 2 installation tasks
+      - run:
+          name: Install pkg_utils (Python 2)
+          command: pip2 install -U --process-dependency-links git+https://github.com/KarrLab/pkg_utils.git#egg=pkg_utils
+      - run:
+          name: Install karr_lab_build_utils (Python 2)
+          command: pip2 install -U --process-dependency-links git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
+      - run:
+          name: Install package (Python 2)
+          command: pip2 install -U --process-dependency-links -e .[all]
+      - run:
+          name: Upgrade requirements (Python 2)
+          command: karr_lab_build_utils2 upgrade-requirements
+
+      # Python 3 installation tasks
+      - run:
+          name: Install pkg_utils (Python 3)
+          command: pip3 install -U --process-dependency-links git+https://github.com/KarrLab/pkg_utils.git#egg=pkg_utils
+      - run:
+          name: Install karr_lab_build_utils (Python 3)
+          command: pip3 install -U --process-dependency-links git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils
+      - run:
+          name: Install package (Python 3)
+          command: pip3 install -U --process-dependency-links -e .[all]
+      - run:
+          name: Upgrade requirements (Python 3)
+          command: karr_lab_build_utils3 upgrade-requirements
+
+      # Save packages to cache
       - save_cache:
-          key: cache-v3-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: cache-v4-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - /usr/local/lib/python2.7/site-packages
             - /usr/local/lib/python3.6/site-packages
 
-      - run: |
-          set +e
+      # Test code
+      - run:
+          name: Test code
+          command: |
+            set +e
 
-          pip2 install -U --process-dependency-links -e .[all] \
-          && karr_lab_build_utils2 upgrade-requirements \
-          && karr_lab_build_utils2 run-tests --with-xunit --with-coverage
-          RESULT_TESTS_PY2=$?
+            OTHER_EXIT_CODE=0
 
-          pip3 install -U --process-dependency-links -e .[all] \
-          && karr_lab_build_utils3 upgrade-requirements \
-          && karr_lab_build_utils3 run-tests --with-xunit --with-coverage
-          RESULT_TESTS_PY3=$?
+            karr_lab_build_utils2 run-tests --with-xunit --with-coverage
+            TEST_EXIT_CODE_PY2=$?
 
-          # Post-test tasks
-          if [[ $RESULT_TESTS_PY2 -eq 0 && $RESULT_TESTS_PY3 -eq 0 ]]; then
-            RESULT_TESTS=0
-          else
-            RESULT_TESTS=1
-          fi
-          karr_lab_build_utils3 do-post-test-tasks $RESULT_TESTS
-          RESULT_POST_TASKS=$?
+            karr_lab_build_utils3 run-tests --with-xunit --with-coverage
+            TEST_EXIT_CODE_PY3=$?
 
-          if [[ $RESULT_TESTS -eq 0 && $RESULT_POST_TASKS -eq 0 ]]; then
-            exit 0
-          else
-            exit 1
-          fi
+      # Generate reports, archive results, and send notifications
+      - run:
+          name: Generate reports, archive results, and send notifications
+          when: always
+          command: |
+            if [[ $TEST_EXIT_CODE_PY2 -eq 0 && $TEST_EXIT_CODE_PY3 -eq 0 ]]; then
+              TEST_EXIT_CODE=0
+            else
+              TEST_EXIT_CODE=1
+            fi
+
+            karr_lab_build_utils3 do-post-test-tasks $TEST_EXIT_CODE $OTHER_EXIT_CODE
+            POST_TASKS_EXIT_CODE=$?
+
+            if [[ $TEST_EXIT_CODE -eq 0 && $OTHER_EXIT_CODE -eq 0 && $POST_TASKS_EXIT_CODE -eq 0 ]]; then
+              exit 0
+            else
+              exit 1
+            fi
 
       - store_test_results:
           path: /root/project/tests/reports
@@ -59,8 +94,8 @@ jobs:
           path: /root/project/.coverage.2.7.14
           destination: .coverage.2.7.14
       - store_artifacts:
-          path: /root/project/.coverage.3.6.3
-          destination: .coverage.3.6.3
+          path: /root/project/.coverage.3.6.4
+          destination: .coverage.3.6.4
       - store_artifacts:
           path: /root/project/docs/_build/html
           destination: docs
