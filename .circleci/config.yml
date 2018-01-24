@@ -5,8 +5,8 @@ jobs:
     docker:
       - image: karrlab/build:0.0.21
     environment:
-      - TEST_EXIT_CODE_PY2: 0
-      - TEST_EXIT_CODE_PY3: 0
+      - TEST_EXIT_CODE_PY2: 1
+      - TEST_EXIT_CODE_PY3: 1
       - OTHER_EXIT_CODE: 1
     steps:
       # Clone repository
