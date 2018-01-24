@@ -7,7 +7,7 @@ jobs:
     environment:
       - TEST_EXIT_CODE_PY2: 0
       - TEST_EXIT_CODE_PY3: 0
-      - OTHER_EXIT_CODE: 0
+      - OTHER_EXIT_CODE: 1
     steps:
       # Clone repository
       - checkout
