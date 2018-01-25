@@ -56,51 +56,35 @@ jobs:
           command: |
             set +e
 
-            echo "0" > OTHER_EXIT_CODE
-
             karr_lab_build_utils2 run-tests --with-xunit --with-coverage
-            echo "$?" > TEST_EXIT_CODE_PY2
+            TEST_EXIT_CODE_PY2=$?
 
             karr_lab_build_utils3 run-tests --with-xunit --with-coverage
-            echo "$?" > TEST_EXIT_CODE_PY3
+            TEST_EXIT_CODE_PY3=$?
+
+            # Calculate exit code and save to file for reading by the next step
+            if [[ $TEST_EXIT_CODE_PY2 -eq 0 && $TEST_EXIT_CODE_PY3 -eq 0 ]]; then
+              echo "0" > TEST_EXIT_CODE
+              exit 0
+            else
+              echo "0" > TEST_EXIT_CODE
+              exit 1
+            fi
 
       # Generate reports, archive results, and send notifications
       - run:
           name: Generate reports, archive results, and send notifications
           when: always
           command: |
-            if [[ -f OTHER_EXIT_CODE ]]; then
-              OTHER_EXIT_CODE=$(<OTHER_EXIT_CODE)
+            if [[ -f TEST_EXIT_CODE ]]; then
+              INSTALLATION_EXIT_CODE=0
+              TEST_EXIT_CODE=$(<TEST_EXIT_CODE)
             else
-              OTHER_EXIT_CODE=1
-            fi
-
-            if [[ -f TEST_EXIT_CODE_PY2 ]]; then
-              TEST_EXIT_CODE_PY2=$(<TEST_EXIT_CODE_PY2)
-            else
-              TEST_EXIT_CODE_PY2=1
-            fi
-
-            if [[ -f TEST_EXIT_CODE_PY3 ]]; then
-              TEST_EXIT_CODE_PY3=$(<TEST_EXIT_CODE_PY3)
-            else
-              TEST_EXIT_CODE_PY3=1
-            fi
-            
-            if [[ $TEST_EXIT_CODE_PY2 -eq 0 && $TEST_EXIT_CODE_PY3 -eq 0 ]]; then
-              TEST_EXIT_CODE=0
-            else
+              INSTALLATION_EXIT_CODE=1
               TEST_EXIT_CODE=1
             fi
 
-            karr_lab_build_utils3 do-post-test-tasks $TEST_EXIT_CODE $OTHER_EXIT_CODE
-            POST_TASKS_EXIT_CODE=$?
-
-            if [[ $TEST_EXIT_CODE -eq 0 && $OTHER_EXIT_CODE -eq 0 && $POST_TASKS_EXIT_CODE -eq 0 ]]; then
-              exit 0
-            else
-              exit 1
-            fi
+            karr_lab_build_utils3 do-post-test-tasks $INSTALLATION_EXIT_CODE $TEST_EXIT_CODE
 
       - store_test_results:
           path: /root/project/tests/reports
