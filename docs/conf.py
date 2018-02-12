@@ -404,7 +404,7 @@ googleanalytics_id = 'UA-86340737-1'
 # -- Run sphinx-apidoc within ReadTheDocs on sphinx-build -----------------
 
 from configparser import ConfigParser
-from sphinx import apidoc
+from sphinx.ext import apidoc
 
 def run_apidoc(app):
     this_dir = os.path.dirname(__file__)
@@ -412,7 +412,7 @@ def run_apidoc(app):
     parser.read(os.path.join(this_dir, '..', 'setup.cfg'))
     packages = parser.get('sphinx-apidocs', 'packages').strip().split('\n')
     for package in packages:
-        apidoc.main(argv=['sphinx-apidoc', '-f', '-P', '-o', os.path.join(this_dir, 'source'), os.path.join(this_dir, '..', package)])
+        apidoc.main(argv=['-f', '-P', '-o', os.path.join(this_dir, 'source'), os.path.join(this_dir, '..', package)])
 
 def setup(app):
     app.connect('builder-inited', run_apidoc)

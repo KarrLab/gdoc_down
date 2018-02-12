@@ -6,7 +6,7 @@ httplib2
 oauth2client
 pyopenssl
 six
-sphinx >= 1.6
+sphinx >= 1.7
 sphinx_rtd_theme
 sphinxcontrib_bibtex
 robpol86_sphinxcontrib_googleanalytics
