@@ -9,6 +9,7 @@ src/
 # cache
 __pycache__/
 .cache/
+.pytest_cache/
 
 #distribution files
 build/
