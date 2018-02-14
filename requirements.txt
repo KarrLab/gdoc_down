@@ -1,6 +1,7 @@
-bs4
+beautifulsoup4
 cement
 google_api_python_client
 httplib2
 oauth2client
 pyopenssl
+setuptools
