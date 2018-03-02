@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /root/project
     docker:
-      - image: karrlab/build:0.0.21
+      - image: karrlab/build:0.0.22
     steps:
       # Clone repository
       - checkout
@@ -11,9 +11,9 @@ jobs:
       # Load packages from cache
       - restore_cache:
           keys:
-            - cache-v4-{{ .Branch }}-{{ checksum "requirements.txt" }}
-            - cache-v4-{{ .Branch }}-
-            - cache-v4-
+            - cache-v5-{{ .Branch }}-{{ checksum "requirements.txt" }}
+            - cache-v5-{{ .Branch }}-
+            - cache-v5-
 
       # Python 2 installation tasks
       - run:
@@ -45,7 +45,7 @@ jobs:
 
       # Save packages to cache
       - save_cache:
-          key: cache-v4-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: cache-v5-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - /usr/local/lib/python2.7/site-packages
             - /usr/local/lib/python3.6/site-packages
