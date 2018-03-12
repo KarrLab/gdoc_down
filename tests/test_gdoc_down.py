@@ -255,3 +255,6 @@ class TestGDocDown(unittest.TestCase):
             with self.assertRaises(SystemExit) as context:
                 gdoc_down.__main__.main()
                 self.assertRegexpMatches(context.Exception, 'usage: gdoc_down')
+
+    def test_api(self):
+        self.assertIsInstance(gdoc_down.GDocDown, type)
