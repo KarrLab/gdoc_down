@@ -16,6 +16,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import datetime
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
@@ -62,7 +63,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'gdoc_down'
-copyright = u'2016, Karr Lab'
+copyright = u'{}, Karr Lab'.format(datetime.datetime.now().year)
 author = 'Jonathan Karr'
 
 # The version info for the project you're documenting, acts as replacement for
