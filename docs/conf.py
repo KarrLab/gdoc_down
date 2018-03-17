@@ -20,7 +20,6 @@ import datetime
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
-import gdoc_down
 
 # -- General configuration ------------------------------------------------
 
@@ -71,7 +70,9 @@ author = 'Jonathan Karr'
 # built documents.
 #
 # The short X.Y version.
-version = gdoc_down.__version__
+filename = os.path.join(os.path.dirname(__file__), '..', 'gdoc_down', 'VERSION')
+with open(filename, 'r') as file:
+    version = file.read()
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -404,7 +405,7 @@ googleanalytics_id = 'UA-86340737-1'
 
 # -- Run sphinx-apidoc within ReadTheDocs on sphinx-build -----------------
 
-from configparser import ConfigParser
+from six.moves.configparser import ConfigParser
 from sphinx.ext import apidoc
 
 def run_apidoc(app):
@@ -415,5 +416,37 @@ def run_apidoc(app):
     for package in packages:
         apidoc.main(argv=['-f', '-P', '-o', os.path.join(this_dir, 'source'), os.path.join(this_dir, '..', package)])
 
+
+# -- mock the import of modules that are not installed  -------------------
+import importlib
+import mock
+import pip_check_reqs.common
+
+# find packages
+parent_dir = os.path.join(os.path.dirname(__file__), '..')
+parser = ConfigParser()
+parser.read(os.path.join(parent_dir, 'setup.cfg'))
+packages = parser.get('sphinx-apidocs', 'packages').strip().split('\n')
+
+# find imported modules
+options = mock.Mock()
+options.paths = [os.path.join(parent_dir, p) for p in packages]
+options.ignore_files = pip_check_reqs.common.ignorer([])
+options.ignore_mods = pip_check_reqs.common.ignorer([])
+import_mods = pip_check_reqs.common.find_imported_modules(options)
+
+# mock non-installed modules
+class ModuleMock(mock.MagicMock):
+    @classmethod
+    def __getattr__(cls, name):
+        return MagicMock()
+for import_mod in import_mods.keys():
+    try:
+        importlib.import_module(import_mod)
+    except ImportError:
+        sys.modules.update((import_mod, ModuleMock()))
+
+
+# -- trigger API doc generation with docs compilation  --------------------
 def setup(app):
     app.connect('builder-inited', run_apidoc)

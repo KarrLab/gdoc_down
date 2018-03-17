@@ -1,13 +1,8 @@
-beautifulsoup4
-cement
-configparser
-google_api_python_client
-httplib2
-oauth2client
-pyopenssl
+mock
+pip_check_reqs
+robpol86_sphinxcontrib_googleanalytics
 six
 sphinx >= 1.7
 sphinx_rtd_theme
 sphinxcontrib_bibtex
-robpol86_sphinxcontrib_googleanalytics
 sphinxcontrib_spelling
