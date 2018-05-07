@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /root/project
     docker:
-      - image: karrlab/build:0.0.22
+      - image: karrlab/build:0.0.23
     steps:
       # Clone repository
       - checkout

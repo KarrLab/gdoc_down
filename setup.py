@@ -2,8 +2,8 @@ import setuptools
 try:
     import pkg_utils
 except ImportError:
-    import pip
-    pip.main(['install', '--process-dependency-links', 'git+https://github.com/KarrLab/pkg_utils.git#egg=pkg_utils'])
+    import pip._internal
+    pip._internal.main(['install', '--process-dependency-links', 'git+https://github.com/KarrLab/pkg_utils.git#egg=pkg_utils'])
     import pkg_utils
 import os
 
