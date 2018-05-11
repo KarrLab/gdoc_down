@@ -74,5 +74,8 @@ jobs:
           path: /root/project/.coverage.3.6.4
           destination: .coverage.3.6.4
       - store_artifacts:
+          path: /root/project/logging.log
+          destination: logging.log
+      - store_artifacts:
           path: /root/project/docs/_build/html
           destination: docs
