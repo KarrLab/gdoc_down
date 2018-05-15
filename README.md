@@ -1,5 +1,5 @@
 [![PyPI package](https://img.shields.io/pypi/v/gdoc_down.svg)](https://pypi.python.org/pypi/gdoc_down)
-[![Documentation](https://img.shields.io/badge/docs-latest-green.svg)](http://docs.karrlab.org/gdoc_down)
+[![Documentation](https://readthedocs.org/projects/gdoc-down/badge/?version=latest)](http://docs.karrlab.org/gdoc_down)
 [![Test results](https://circleci.com/gh/KarrLab/gdoc_down.svg?style=shield)](https://circleci.com/gh/KarrLab/gdoc_down)
 [![Test coverage](https://coveralls.io/repos/github/KarrLab/gdoc_down/badge.svg)](https://coveralls.io/github/KarrLab/gdoc_down)
 [![Code analysis](https://api.codeclimate.com/v1/badges/3c7f002e731de98c31d0/maintainability)](https://codeclimate.com/github/KarrLab/gdoc_down)
