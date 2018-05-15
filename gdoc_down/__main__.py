@@ -11,6 +11,7 @@ formats.
 from cement.core.foundation import CementApp
 from cement.core.controller import CementBaseController, expose
 from gdoc_down.core import GDocDown
+import gdoc_down
 
 class BaseController(CementBaseController):
     """ Base controller for command line application """
@@ -19,10 +20,11 @@ class BaseController(CementBaseController):
         label = 'base'
         description = "Download a Google document, presentation, or workbook to a local file"
         arguments = [
+            (['-v', '--version'], dict(action='version', version=gdoc_down.__version__)),
             (['google_file'], dict(type=str, help='path to Google document, presentation, or workbook')),
             (['--format', '-f'], dict(type=str, help='output format (csv, docx, epub, html, odft, odp, ods, pdf, pptx, rtf, tsv, tex, txt, xlsx)', default='docx')),
             (['--out_path', '-o'], dict(type=str, help='path where Google document, presentation, or workbook should be downloaded', default='.')),
-            (['--extension', '-e'], dict(type=str, help='output extension', default=None)),
+            (['--extension', '-e'], dict(type=str, help='output extension', default=None)),            
         ]
 
     @expose(hide=True)
