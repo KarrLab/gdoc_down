@@ -1,25 +1,36 @@
 `gdoc_down` documentation
 =========================
 
-API and command line program to save Google documents to local files in several formats:
+API and command line program to save Google documents, presentations, and worksheets in a local Google Drive / Backup & Sync
+directory to to local files.
 
+`gdoc_down` supports several formats:
+
+* CSV (.csv)
+* EPUB (.epub)
+* Excel workbook (.xlsx)
 * HTML (.html)
+* Image (.png, .jpg, .svg)
 * LaTeX (.tex)
-* Open document format (.odt)
-* Plain text (.txt)
+* Open Office document (.odt)
+* Open Office presentation (.odp)
+* Open Office workbook (.ods)
+* Plain text file (.txt)    
 * Portable document format (.pdf)
-* Rich text format (.rtf)
-* Word documents (.docx)
+* Powerpoint presentation (.pptx)
+* Rich text document (.rtf)
+* TSV (.tsv)
+* Word document (.docx)
 
-The software has several special features for handling LaTeX files:
+`gdoc_down` also has special features for handling .gdoc files that contain LaTeX:
 
-* The program ignores all images. This allows the user to place images inside the Google 
-  document for convenience and to use `\includegraphics` to embed images in compile PDF files.
-* The program will convert all Google document comments to PDF comments.
-* The program ignores all page breaks.
+* `gdoc_down` ignores all images. This allows the user to place images inside the Google 
+  document for convenience and to use \includegraphics to embed images in compile PDF files.
+* `gdoc_down` will convert all Google document comments to PDF comments.
+* `gdoc_down` ignores all page breaks.
 
-The first time the program is called, the program will request access to the user's Google
-account. This will create a client.json file in the users home directory (`~/.gdoc_down/client.json`).
+The first time `gdoc_down` is called, `gdoc_down` will request access to the user's Google
+account. This will create a client.json file in the users home directory (~/.gdoc_down/client.json).
 
 Contents
 --------

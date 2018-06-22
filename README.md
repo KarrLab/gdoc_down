@@ -7,7 +7,10 @@
 ![Analytics](https://ga-beacon.appspot.com/UA-86759801-1/gdoc_down/README.md?pixel)
 
 # `gdoc_down`
-API and command line program to save Google documents, presentations, and worksheets to local files in several formats:
+API and command line program to save Google documents, presentations, and worksheets in a local Google Drive / Backup & Sync
+directory to to local files.
+
+`gdoc_down` supports several formats:
 
 * CSV (.csv)
 * EPUB (.epub)
@@ -25,14 +28,14 @@ API and command line program to save Google documents, presentations, and worksh
 * TSV (.tsv)
 * Word document (.docx)
 
-The software has several special features for handling LaTeX files:
+`gdoc_down` also has special features for handling .gdoc files that contain LaTeX:
 
-* The program ignores all images. This allows the user to place images inside the Google 
+* `gdoc_down` ignores all images. This allows the user to place images inside the Google 
   document for convenience and to use \includegraphics to embed images in compile PDF files.
-* The program will convert all Google document comments to PDF comments.
-* The program ignores all page breaks.
+* `gdoc_down` will convert all Google document comments to PDF comments.
+* `gdoc_down` ignores all page breaks.
 
-The first time the program is called, the program will request access to the user's Google
+The first time `gdoc_down` is called, `gdoc_down` will request access to the user's Google
 account. This will create a client.json file in the users home directory (~/.gdoc_down/client.json).
 
 ## Installation
@@ -63,13 +66,20 @@ optional arguments:
                         output extension
 ```
 
+## Examples
+```
+gdoc_down -f docx /path/to/Google \Drive/file.gdoc
+gdoc_down -f pptx /path/to/Google \Drive/file.gslides
+gdoc_down -f xlsx /path/to/Google \Drive/file.gsheet
+```
+
 ## Documentation
 Please see the documentation at [Read the Docs](http://docs.karrlab.org/gdoc_down).
 
 ## Tests
-`nose` can be used to run the tests:
+`pytest` can be used to run the tests:
 ```
-nosetests tests
+pytest tests
 ```
 
 Please note that several additional packages are required for testing (see [tests/requirements.txt](tests/requirements.txt)).

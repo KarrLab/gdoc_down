@@ -20,3 +20,10 @@ Command line usage
                             path where Google document should be downloaded
       --extension EXTENSION, -e EXTENSION
                             output extension
+
+
+Examples::
+
+    gdoc_down -f docx /path/to/Google \Drive/file.gdoc
+    gdoc_down -f pptx /path/to/Google \Drive/file.gslides
+    gdoc_down -f xlsx /path/to/Google \Drive/file.gsheet
