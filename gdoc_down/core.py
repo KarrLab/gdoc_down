@@ -88,11 +88,13 @@ class GDocDown(object):
         Retuns:
             :obj:`oauth2client.client.OAuth2Credentials`: Credentials object for OAuth 2.0.
         """
-        store = oauth2client.file.Storage(GDocDown.CREDENTIAL_PATH)
+        if not os.path.isdir(os.path.dirname(self.CREDENTIAL_PATH)):
+            os.makedirs(os.path.dirname(self.CREDENTIAL_PATH))
+        store = oauth2client.file.Storage(self.CREDENTIAL_PATH)
         credentials = store.get()
         if not credentials or credentials.invalid:
-            flow = oauth2client.client.flow_from_clientsecrets(GDocDown.CLIENT_SECRET_PATH, GDocDown.SCOPES)
-            flow.user_agent = GDocDown.APPLICATION_NAME
+            flow = oauth2client.client.flow_from_clientsecrets(self.CLIENT_SECRET_PATH, self.SCOPES)
+            flow.user_agent = self.APPLICATION_NAME
             parser = argparse.ArgumentParser(
                 description=__doc__,
                 formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -200,8 +202,8 @@ class GDocDown(object):
         with open(out_file, "wb") as file:
             file.write(content)
 
-    @staticmethod
-    def get_google_id(google_file):
+    @classmethod
+    def get_google_id(cls, google_file):
         """ Get Google document, presentation, or workbook id
 
         Args:
@@ -215,8 +217,8 @@ class GDocDown(object):
             data = json.load(data_file)
         return data['doc_id']
 
-    @staticmethod
-    def convert_html_to_latex(html_zip_content):
+    @classmethod
+    def convert_html_to_latex(cls, html_zip_content):
         """ Format Google document content downloaded in HTML format for LaTeX
 
         * Replace HTML characters with LaTeX commands
@@ -283,7 +285,7 @@ class GDocDown(object):
             ref = root.find((".//a[@id='cmnt_ref%d']" % comment_id))
             ref_parent = root.find((".//a[@id='cmnt_ref%d']/.." % comment_id))
             ref_parent.remove(ref)
-            ref_parent.text = ('\pdfcomment{%s}' % GDocDown.get_element_text(comment_grandparent))
+            ref_parent.text = ('\pdfcomment{%s}' % cls.get_element_text(comment_grandparent))
 
             # remove comment footnote
             comment_greatgrandparent.remove(comment_grandparent)
@@ -292,14 +294,14 @@ class GDocDown(object):
         # collect body text
         tex_content = ''
         for child in list(root.find('./body')):
-            tex_content = tex_content + GDocDown.get_element_text(child)
+            tex_content = tex_content + cls.get_element_text(child)
             tex_content = tex_content + "\n\n"
 
         """ return formatted LaTeX """
         return tex_content.encode('utf-8')
 
-    @staticmethod
-    def get_element_text(element):
+    @classmethod
+    def get_element_text(cls, element):
         """ Get all of the text underneath an XML element
 
         Args:
@@ -311,5 +313,5 @@ class GDocDown(object):
 
         text = element.text or ''
         for child in list(element):
-            text = text + GDocDown.get_element_text(child)
+            text = text + cls.get_element_text(child)
         return text
