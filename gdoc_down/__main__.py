@@ -8,12 +8,11 @@ formats.
 :License: MIT
 """
 
-from cement.core.foundation import CementApp
-from cement.core.controller import CementBaseController, expose
 from gdoc_down.core import GDocDown
+import cement
 import gdoc_down
 
-class BaseController(CementBaseController):
+class BaseController(cement.Controller):
     """ Base controller for command line application """
 
     class Meta:
@@ -27,14 +26,14 @@ class BaseController(CementBaseController):
             (['--extension', '-e'], dict(type=str, help='output extension', default=None)),            
         ]
 
-    @expose(hide=True)
-    def default(self):
+    @cement.ex(hide=True)
+    def _default(self):
         args = self.app.pargs
 
         GDocDown(credentials=self.app.credentials).download(args.google_file, format=args.format, out_path=args.out_path, extension=args.extension)
 
 
-class App(CementApp):
+class App(cement.App):
     """ Command line application """
 
     class Meta:
