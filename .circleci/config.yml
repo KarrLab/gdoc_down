@@ -11,9 +11,9 @@ jobs:
       # Load packages from cache
       - restore_cache:
           keys:
-            - cache-v8-{{ .Branch }}-{{ checksum "requirements.txt" }}
-            - cache-v8-{{ .Branch }}-
-            - cache-v8-
+            - cache-v9-{{ .Branch }}-{{ checksum "requirements.txt" }}
+            - cache-v9-{{ .Branch }}-
+            - cache-v9-
       
       # Python 3 installation tasks
       - run:
@@ -24,13 +24,11 @@ jobs:
           command: pip3 install -U --process-dependency-links git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils[all]
       - run:
           name: Install package (Python 3)
-          command: |
-            pip3 install "cement>=3.0.0"
-            pip3 install -U --process-dependency-links -e .[all]
+          command: pip3 install -U --process-dependency-links -e .[all]
 
       # Save packages to cache
       - save_cache:
-          key: cache-v8-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: cache-v9-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - /usr/local/lib/python3.6/site-packages
 
