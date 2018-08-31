@@ -23,6 +23,9 @@ jobs:
           name: Install karr_lab_build_utils (Python 3)
           command: pip3 install -U --process-dependency-links git+https://github.com/KarrLab/karr_lab_build_utils.git#egg=karr_lab_build_utils[all]
       - run:
+          name: Install package configuration files including credentials
+          command: karr_lab_build_utils3 download-install-package-config-files
+      - run:
           name: Install package (Python 3)
           command: pip3 install -U --process-dependency-links -e .[all]
 
