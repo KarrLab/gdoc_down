@@ -11,9 +11,9 @@ jobs:
       # Load packages from cache
       - restore_cache:
           keys:
-            - cache-v9-{{ .Branch }}-{{ checksum "requirements.txt" }}
-            - cache-v9-{{ .Branch }}-
-            - cache-v9-
+            - cache-v10-{{ .Branch }}-{{ checksum "requirements.txt" }}
+            - cache-v10-{{ .Branch }}-
+            - cache-v10-
       
       # Python 3 installation tasks
       - run:
@@ -26,12 +26,18 @@ jobs:
           name: Install package configuration files including credentials
           command: karr_lab_build_utils3 download-install-package-config-files
       - run:
+          name: Install and upgrade requirements (Python 3)
+          command: |
+            set +e
+            karr_lab_build_utils3 install-requirements
+            karr_lab_build_utils3 upgrade-karr-lab-packages
+      - run:
           name: Install package (Python 3)
           command: pip3 install -U --process-dependency-links -e .[all]
 
       # Save packages to cache
       - save_cache:
-          key: cache-v9-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: cache-v10-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - /usr/local/lib/python3.6/site-packages
 
