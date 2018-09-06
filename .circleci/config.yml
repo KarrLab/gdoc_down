@@ -84,9 +84,9 @@ jobs:
           path: /root/project/docs/_build/html
           destination: docs
 
-workflows:
-  version: 2
-  build:
-    jobs:
-      - build:
-          context: karr_lab
+# workflows:
+#  version: 2
+#  build:
+#    jobs:
+#      - build:
+#          context: karr_lab
