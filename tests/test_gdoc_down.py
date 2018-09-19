@@ -180,7 +180,7 @@ class TestGDocDown(unittest.TestCase):
         self.assertTrue(os.path.isfile(os.path.join(self.out_dir, 'example.epub')))
 
     def test_cli_gdoc_2unsupported(self):
-        with self.assertRaisesRegexp(Exception, 'Unknown format "unsupported"'):
+        with self.assertRaisesRegex(Exception, 'Unknown format "unsupported"'):
             with cli(argv=['-f', 'unsupported', '-o', self.out_dir, self.GDOC_FILE], credentials=self.credentials) as app:
                 app.run()
 
@@ -209,7 +209,7 @@ class TestGDocDown(unittest.TestCase):
             app.run()
         self.assertTrue(os.path.isfile(os.path.join(self.out_dir, 'example.xlsx')))
 
-        with self.assertRaisesRegexp(Exception, 'Unknown format "unsupported"'):
+        with self.assertRaisesRegex(Exception, 'Unknown format "unsupported"'):
             with cli(argv=['-f', 'unsupported', '-o', self.out_dir, self.GSHEET_FILE], credentials=self.credentials) as app:
                 app.run()
 
@@ -230,7 +230,7 @@ class TestGDocDown(unittest.TestCase):
             app.run()
         self.assertTrue(os.path.isfile(os.path.join(self.out_dir, 'example.txt')))
 
-        with self.assertRaisesRegexp(Exception, 'Unknown format "unsupported"'):
+        with self.assertRaisesRegex(Exception, 'Unknown format "unsupported"'):
             with cli(argv=['-f', 'unsupported', '-o', self.out_dir, self.GSLIDES_FILE], credentials=self.credentials) as app:
                 app.run()
 
@@ -238,14 +238,14 @@ class TestGDocDown(unittest.TestCase):
         file, filename = tempfile.mkstemp('.tmp')
         os.close(file)
 
-        with self.assertRaisesRegexp(Exception, 'Unknown Google document extension ".tmp"'):
+        with self.assertRaisesRegex(Exception, 'Unknown Google document extension ".tmp"'):
             with cli(argv=['-f', 'txt', '-o', self.out_dir, filename], credentials=self.credentials) as app:
                 app.run()
 
         os.remove(filename)
 
     def test_cli_provide_extension_and_output_filename(self):
-        with self.assertRaisesRegexp(Exception, 'Ouput file path and extension cannot both be specified'):
+        with self.assertRaisesRegex(Exception, 'Ouput file path and extension cannot both be specified'):
             with cli(argv=['-f', 'docx', '-e', 'other', '-o', os.path.join(self.out_dir, 'example.docx'),
                            self.GDOC_FILE], credentials=self.credentials) as app:
                 app.run()
