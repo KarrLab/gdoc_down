@@ -41,7 +41,7 @@ class GDocDown(object):
     The class has several special features for handling LaTeX files:
 
     * The program ignores all images. This allows the user to place images inside the Google
-      document for convenience and to use \includegraphics to embed images in compile PDF files.
+      document for convenience and to use \\\\includegraphics to embed images in compile PDF files.
     * The program will convert all Google document comments to PDF comments.
     * The program ignores all page breaks.
 
