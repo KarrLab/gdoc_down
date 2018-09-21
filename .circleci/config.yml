@@ -75,11 +75,11 @@ jobs:
       - store_test_results:
           path: /root/project/tests/reports
       - store_artifacts:
-          path: /root/project/.coverage.3.6.5
-          destination: .coverage.3.6.5
+          path: /root/project/tests/reports
+          destination: reports
       - store_artifacts:
-          path: /root/project/logs
-          destination: logs
+          path: /root/.wc/log
+          destination: log
       - store_artifacts:
           path: /root/project/docs/_build/html
           destination: docs
