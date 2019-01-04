@@ -14,7 +14,7 @@ import argparse
 import io
 import json
 import re
-import oauth2client
+import oauth2client.file
 import oauth2client.tools
 import os
 import zipfile
