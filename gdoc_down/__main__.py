@@ -37,7 +37,7 @@ class App(cement.App):
     """ Command line application """
 
     class Meta:
-        label = 'gdoc_down'
+        label = 'gdoc-down'
         base_controller = 'base'
         handlers = [BaseController]
 
