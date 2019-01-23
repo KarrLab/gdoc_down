@@ -45,7 +45,7 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'gdoc_down = gdoc_down.__main__:main',
+            'gdoc-down = gdoc_down.__main__:main',
         ],
     },
 )

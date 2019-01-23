@@ -251,10 +251,10 @@ class TestGDocDown(unittest.TestCase):
                 app.run()
 
     def test_raw_cli(self):
-        with mock.patch('sys.argv', ['gdoc_down', '--help']):
+        with mock.patch('sys.argv', ['gdoc-down', '--help']):
             with self.assertRaises(SystemExit) as context:
                 gdoc_down.__main__.main()
-                self.assertRegex(context.Exception, 'usage: gdoc_down')
+                self.assertRegex(context.Exception, 'usage: gdoc-down')
 
     def test_api(self):
         self.assertIsInstance(gdoc_down.GDocDown, type)
