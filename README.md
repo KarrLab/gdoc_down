@@ -31,7 +31,7 @@ directory to to local files.
 `gdoc_down` also has special features for handling .gdoc files that contain LaTeX:
 
 * `gdoc_down` ignores all images. This allows the user to place images inside the Google 
-  document for convenience and to use \includegraphics to embed images in compile PDF files.
+  document for convenience and to use `\includegraphics` to embed images in compile PDF files.
 * `gdoc_down` will convert all Google document comments to PDF comments.
 * `gdoc_down` ignores all page breaks.
 
