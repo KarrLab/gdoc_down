@@ -39,9 +39,16 @@ The first time `gdoc_down` is called, `gdoc_down` will request access to the use
 account. This will create a client.json file in the users home directory (~/.gdoc_down/client.json).
 
 ## Installation
-```
-pip install gdoc_down
-```
+
+* Latest release from PyPI
+  ```
+  pip install gdoc_down
+  ```
+
+* Latest revision from GitHub
+  ```
+  pip install git+https://github.com/KarrLab/gdoc_down.git#egg=gdoc_down
+  ```
 
 ## Command line usage
 ```
