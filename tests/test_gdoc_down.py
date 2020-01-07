@@ -63,8 +63,9 @@ class TestGDocDown(unittest.TestCase):
         self.assertEqual(GDocDown.get_google_id(self.GDOC_FILE), '1mgPojZVReTAMBIVvt6LSQ59AGTsxx2-myLR9oIYIJ2s')
 
     def test_get_credentials(self):
-        with mock.patch.object(oauth2client.tools, 'run_flow', return_value=self.credentials):
-            gdoc_down = GDocDown()
+        with mock.patch.object(oauth2client.file.Storage, 'get', return_value=None):
+            with mock.patch.object(oauth2client.tools, 'run_flow', return_value=self.credentials):
+                gdoc_down = GDocDown()
         self.assertEqual(gdoc_down.credentials, self.credentials)
 
     def test_api_txt(self):
@@ -159,7 +160,8 @@ class TestGDocDown(unittest.TestCase):
             content = file.read()
             self.assertRegex(content, 'gdoc_down example file')
 
-            self.assertFalse('comment value' in content)
+            self.assertNotIn('[a]', content)
+            # self.assertIn('\pdfcomment{comment value}', content)
 
     def test_cli_gdoc_2txt(self):
         with cli(argv=['-f', 'txt', '-o', self.out_dir, self.GDOC_FILE], credentials=self.credentials) as app:

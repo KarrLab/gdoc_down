@@ -271,24 +271,21 @@ class GDocDown(object):
         comment_id = 0
         while True:
             comment_id = comment_id + 1
-            comment = root.find((".//a[@id='cmnt%d']" % comment_id))
-            comment_parent = root.find((".//a[@id='cmnt%d']/.." % comment_id))
-            comment_grandparent = root.find((".//a[@id='cmnt%d']/../.." % comment_id))
-            comment_greatgrandparent = root.find((".//a[@id='cmnt%d']/../../.." % comment_id))
-            if comment is None:
+            comment_anchor = root.find(".//a[@id='cmnt{}']".format(comment_id))
+            if comment_anchor is None:
                 break
+            comment_parent = root.find(".//a[@id='cmnt{}']/..".format(comment_id))
+            comment = root.find(".//a[@id='cmnt{}']/../span".format(comment_id))
+            comment_grandparent = root.find(".//a[@id='cmnt{}']/../..".format(comment_id))
 
-            # remove numbering from comment
-            comment_parent.remove(comment)
+            # remove comment
+            comment_grandparent.remove(comment_parent)
 
             # replace superscript with PDF comment
-            ref = root.find((".//a[@id='cmnt_ref%d']" % comment_id))
-            ref_parent = root.find((".//a[@id='cmnt_ref%d']/.." % comment_id))
+            ref = root.find(".//a[@id='cmnt_ref{}']".format(comment_id))
+            ref_parent = root.find(".//a[@id='cmnt_ref{}']/..".format(comment_id))
             ref_parent.remove(ref)
-            ref_parent.text = ('\pdfcomment{%s}' % cls.get_element_text(comment_grandparent))
-
-            # remove comment footnote
-            comment_greatgrandparent.remove(comment_grandparent)
+            ref_parent.text = '\pdfcomment{{{}}}'.format(cls.get_element_text(comment))
         """
 
         # collect body text
