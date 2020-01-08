@@ -49,6 +49,8 @@ jobs:
       # Test code
       - run:
           name: Test code
+          environment:
+            PYTHONFAULTHANDLER: 1
           command: |
             set +e
 
