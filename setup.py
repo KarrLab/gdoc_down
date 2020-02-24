@@ -31,7 +31,6 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude=['tests', 'tests.*']),
     package_data={
         name: [
-            'VERSION',
             'client.json',
         ],
     },
