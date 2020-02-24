@@ -1,9 +1,6 @@
 # description
 include README.rst
 
-# version
-include gdoc_down/VERSION
-
 # license
 include LICENSE
 
