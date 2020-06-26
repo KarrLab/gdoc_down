@@ -1,7 +1,4 @@
 beautifulsoup4
 cement >= 3.0.0
 google_api_python_client
-httplib2
 oauth2client
-pyopenssl
-setuptools
