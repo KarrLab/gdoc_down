@@ -52,7 +52,7 @@ account. This will create a client.json file in the users home directory (~/.gdo
 
 ## Command line usage
 ```
-usage: gdoc_down (sub-commands ...) [options ...] {arguments ...}
+usage: gdoc-down (sub-commands ...) [options ...] {arguments ...}
 
 Download a Google document, presentation, or workbook to a local file
 
@@ -75,9 +75,9 @@ optional arguments:
 
 ## Examples
 ```
-gdoc_down -f docx /path/to/Google \Drive/file.gdoc
-gdoc_down -f pptx /path/to/Google \Drive/file.gslides
-gdoc_down -f xlsx /path/to/Google \Drive/file.gsheet
+gdoc-down -f docx /path/to/Google \Drive/file.gdoc
+gdoc-down -f pptx /path/to/Google \Drive/file.gslides
+gdoc-down -f xlsx /path/to/Google \Drive/file.gsheet
 ```
 
 ## Documentation
