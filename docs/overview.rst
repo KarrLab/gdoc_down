@@ -3,7 +3,7 @@ Command line usage
 
 .. code-block:: text
 
-    gdoc_down (sub-commands ...) [options ...] {arguments ...}
+    gdoc-down (sub-commands ...) [options ...] {arguments ...}
 
     Download Google documents to local files in various formats
 
@@ -24,6 +24,6 @@ Command line usage
 
 Examples::
 
-    gdoc_down -f docx /path/to/Google \Drive/file.gdoc
-    gdoc_down -f pptx /path/to/Google \Drive/file.gslides
-    gdoc_down -f xlsx /path/to/Google \Drive/file.gsheet
+    gdoc-down -f docx /path/to/Google \Drive/file.gdoc
+    gdoc-down -f pptx /path/to/Google \Drive/file.gslides
+    gdoc-down -f xlsx /path/to/Google \Drive/file.gsheet

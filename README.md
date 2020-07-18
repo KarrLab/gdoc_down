@@ -6,11 +6,11 @@
 [![License](https://img.shields.io/github/license/KarrLab/gdoc_down.svg)](LICENSE)
 ![Analytics](https://ga-beacon.appspot.com/UA-86759801-1/gdoc_down/README.md?pixel)
 
-# `gdoc_down`
+# `gdoc-down`
 API and command line program to save Google documents, presentations, and worksheets in a local Google Drive / Backup & Sync
 directory to to local files.
 
-`gdoc_down` supports several formats:
+`gdoc-down` supports several formats:
 
 * CSV (.csv)
 * EPUB (.epub)
@@ -28,14 +28,14 @@ directory to to local files.
 * TSV (.tsv)
 * Word document (.docx)
 
-`gdoc_down` also has special features for handling .gdoc files that contain LaTeX:
+`gdoc-down` also has special features for handling .gdoc files that contain LaTeX:
 
-* `gdoc_down` ignores all images. This allows the user to place images inside the Google 
+* `gdoc-down` ignores all images. This allows the user to place images inside the Google 
   document for convenience and to use `\includegraphics` to embed images in compile PDF files.
-* `gdoc_down` will convert all Google document comments to PDF comments.
-* `gdoc_down` ignores all page breaks.
+* `gdoc-down` will convert all Google document comments to PDF comments.
+* `gdoc-down` ignores all page breaks.
 
-The first time `gdoc_down` is called, `gdoc_down` will request access to the user's Google
+The first time `gdoc-down` is called, `gdoc-down` will request access to the user's Google
 account. This will create a client.json file in the users home directory (~/.gdoc_down/client.json).
 
 ## Installation
@@ -95,7 +95,7 @@ Please note that several additional packages are required for testing (see [test
 The example model is released under the [MIT license](LICENSE).
 
 ## Development team
-`gdoc_down` was developed by [Jonathan Karr](http://www.karrlab.org) at the Icahn School of Medicine at Mount Sinai in New York, USA.
+`gdoc-down` was developed by [Jonathan Karr](http://www.karrlab.org) at the Icahn School of Medicine at Mount Sinai in New York, USA.
 
 ## Questions and comments
 Please contact the [Jonathan Karr](http://www.karrlab.org) with any questions or comments.
