@@ -7,7 +7,8 @@ try:
         [sys.executable, "-m", "pip", "show", "pkg_utils"],
         check=True, capture_output=True)
     match = re.search(r'\nVersion: (.*?)\n', result.stdout.decode(), re.DOTALL)
-    assert match and tuple(match.group(1).split('.')) >= ('0', '0', '5')
+    if not (match and tuple(match.group(1).split('.')) >= ('0', '0', '5')):
+        raise AssertionError
 except (subprocess.CalledProcessError, AssertionError):
     subprocess.run(
         [sys.executable, "-m", "pip", "install", "-U", "pkg_utils"],
