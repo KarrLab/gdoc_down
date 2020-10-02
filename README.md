@@ -8,7 +8,7 @@
 
 # `gdoc-down`
 API and command line program to save Google documents, presentations, and worksheets in a local Google Drive / Backup & Sync
-directory to to local files.
+directory to local files.
 
 `gdoc-down` supports several formats:
 
